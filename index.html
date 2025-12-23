@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="https://trae-api-us.mchost.guru/api/ide/v1/text_to_image?prompt=PAMBAZO%20bakery%20logo%20bread%20icon%20orange%20gradient%20modern%20design%20app%20icon%20style%2072px&image_size=square" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    
+    <!-- PWA Meta Tags -->
+    <meta name="application-name" content="PAMBAZO" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="PAMBAZO" />
+    <meta name="description" content="Sistema completo de gestión para panaderías con roles multi-usuario" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="msapplication-config" content="/browserconfig.xml" />
+    <meta name="msapplication-TileColor" content="#D97706" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="theme-color" content="#D97706" />
+    
+    <!-- Apple Touch Icons -->
+    <link rel="apple-touch-icon" href="https://trae-api-us.mchost.guru/api/ide/v1/text_to_image?prompt=PAMBAZO%20bakery%20logo%20bread%20icon%20orange%20gradient%20modern%20design%20app%20icon%20style&image_size=square" />
+    <link rel="apple-touch-icon" sizes="152x152" href="https://trae-api-us.mchost.guru/api/ide/v1/text_to_image?prompt=PAMBAZO%20bakery%20logo%20bread%20icon%20orange%20gradient%20modern%20design%20app%20icon%20style&image_size=square" />
+    <link rel="apple-touch-icon" sizes="180x180" href="https://trae-api-us.mchost.guru/api/ide/v1/text_to_image?prompt=PAMBAZO%20bakery%20logo%20bread%20icon%20orange%20gradient%20modern%20design%20app%20icon%20style&image_size=square" />
+    <link rel="apple-touch-icon" sizes="167x167" href="https://trae-api-us.mchost.guru/api/ide/v1/text_to_image?prompt=PAMBAZO%20bakery%20logo%20bread%20icon%20orange%20gradient%20modern%20design%20app%20icon%20style&image_size=square" />
+    
+    <!-- Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+    
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://trae-api-us.mchost.guru" />
+    
+    <!-- SEO Meta Tags -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="PAMBAZO - Sistema de Gestión de Panadería" />
+    <meta property="og:description" content="Sistema completo de gestión para panaderías con roles multi-usuario: clientes, meseros, administradores y propietarios" />
+    <meta property="og:site_name" content="PAMBAZO" />
+    <meta property="og:url" content="https://pambazo.app" />
+    <meta property="og:image" content="https://trae-api-us.mchost.guru/api/ide/v1/text_to_image?prompt=PAMBAZO%20bakery%20logo%20bread%20icon%20orange%20gradient%20modern%20design%20app%20icon%20style%20512px&image_size=square_hd" />
+    
+    <title>PAMBAZO - Sistema de Gestión de Panadería</title>
+    
+    <!-- Critical CSS inlined -->
+    <style>
+      /* Critical CSS for initial load */
+      html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow-x: hidden;
+      }
+      
+      body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        line-height: 1.5;
+        background-color: #ffffff;
+        color: #000000;
+      }
+      
+      .dark body {
+        background-color: #0a0a0a;
+        color: #ffffff;
+      }
+      
+      /* Loading spinner */
+      .loading-spinner {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 3px solid #f3f3f3;
+        border-top: 3px solid #ea580c;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+      
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      
+      /* Prevent flash of unstyled content */
+      .loading-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      /* Mobile viewport fix */
+      @media screen and (max-width: 768px) {
+        body {
+          font-size: 14px;
+        }
+      }
+    </style>
+    
+    <!-- Analytics placeholder -->
+    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=GA_TRACKING_ID"></script> -->
+    <!-- <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'GA_TRACKING_ID');
+    </script> -->
+  </head>
+  
+  <body>
+    <!-- Loading fallback -->
+    <div id="loading" class="loading-container" style="display: none;">
+      <div style="text-align: center;">
+        <div style="font-size: 3rem; margin-bottom: 1rem;">🥖</div>
+        <h1 style="margin: 0; color: #ea580c; font-size: 2rem;">PAMBAZO</h1>
+        <p style="margin: 0.5rem 0; color: #666;">Cargando sistema...</p>
+        <div class="loading-spinner"></div>
+      </div>
+    </div>
+    
+    <!-- React App Container -->
+    <div id="root">
+      <!-- Fallback content while React loads -->
+      <div style="
+        min-height: 100vh;
+        background: linear-gradient(135deg, #fef7ed, #fef3c7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      ">
+        <div style="text-align: center;">
+          <div style="font-size: 4rem; margin-bottom: 1rem;">🥖</div>
+          <h1 style="font-size: 2.5rem; font-weight: bold; color: #9a3412; margin-bottom: 0.5rem;">PAMBAZO</h1>
+          <p style="color: #ea580c; font-size: 1.2rem;">¡Sistema funcionando correctamente!</p>
+          <div style="
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+          ">
+            <p style="color: #374151; margin: 0;">Aplicación cargada exitosamente</p>
+            <p style="color: #666; font-size: 0.9rem; margin: 0.5rem 0 0 0;">PAMBAZO operativo y funcional</p>
+            <div style="
+              margin-top: 1rem;
+              padding: 0.75rem;
+              background-color: #f3f4f6;
+              border-radius: 6px;
+              border-left: 4px solid #ea580c;
+            ">
+              <p style="color: #374151; font-size: 0.9rem; margin: 0;">✅ Sistema de gestión de panadería</p>
+              <p style="color: #666; font-size: 0.8rem; margin: 0.25rem 0 0 0;">Listo para usar</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Test Script removed -->
+    
+
+    
+    <!-- Main App Script -->
+    <script type="module" src="/main.tsx"></script>
+    <!-- <script src="/test.js"></script> -->
+    <script>
+
+      
+      // Simple loading screen management
+      window.addEventListener('load', function() {
+        const loading = document.getElementById('loading');
+        if (loading) {
+          loading.style.display = 'none';
+        }
+      });
+    </script>
+    
+    <!-- PWA Installation Script -->
+    <script>
+      // Hide loading screen as fallback if React doesn't load
+      // const loading = document.getElementById('loading');
+      
+      // Set a timeout to hide loading if React doesn't take over
+      // setTimeout(() => {
+      //   if (loading && loading.style.display !== 'none') {
+      //     loading.style.display = 'none';
+      //   }
+      // }, 5000); // 5 second fallback
+      
+      // Also hide on load as backup
+      // window.addEventListener('load', () => {
+      //   const loading = document.getElementById('loading');
+      //   if (loading) {
+      //     loading.style.display = 'none';
+      //   }
+      // });
+      
+      console.log('Index.html script loaded - loading screen control disabled');
+      
+      // PWA Install prompt handler
+      let deferredPrompt;
+      
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        console.log('PWA install prompt available');
+      });
+      
+      window.addEventListener('appinstalled', (evt) => {
+        console.log('PWA was installed');
+        // Track installation analytics
+        if (typeof gtag !== 'undefined') {
+          gtag('event', 'pwa_install', {
+            event_category: 'engagement',
+            event_label: 'PWA Installation'
+          });
+        }
+      });
+      
+      // Service Worker registration
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then((registration) => {
+              console.log('SW registered: ', registration);
+            })
+            .catch((registrationError) => {
+              console.log('SW registration failed: ', registrationError);
+            });
+        });
+      }
+      
+      // Viewport height fix for mobile browsers
+      function setViewportHeight() {
+        let vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', vh + 'px');
+      }
+      
+      setViewportHeight();
+      window.addEventListener('resize', setViewportHeight);
+      window.addEventListener('orientationchange', setViewportHeight);
+      
+      // Prevent zoom on input focus (iOS)
+      document.addEventListener('touchstart', function() {}, true);
+      
+      // Add iOS safari specific classes
+      if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+        document.body.classList.add('ios');
+      }
+      
+      // Add standalone mode class
+      if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
+        document.body.classList.add('standalone');
+      }
+    </script>
+    
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "PAMBAZO",
+      "description": "Sistema completo de gestión para panadería con funcionalidades móviles optimizadas",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web Browser, iOS, Android",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "creator": {
+        "@type": "Organization",
+        "name": "PAMBAZO Team"
+      }
+    }
+    </script>
+  </body>
+</html>

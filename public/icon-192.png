@@ -1,0 +1,8 @@
+<svg width="192" height="192" viewBox="0 0 192 192" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="192" height="192" rx="24" fill="#ea580c"/>
+  <path d="M48 144V96c0-26.51 21.49-48 48-48s48 21.49 48 48v48H48z" fill="#fff"/>
+  <circle cx="96" cy="72" r="16" fill="#ea580c"/>
+  <path d="M72 120h48v16H72v-16z" fill="#ea580c"/>
+  <path d="M80 104h32v8H80v-8z" fill="#ea580c"/>
+  <text x="96" y="168" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="14" font-weight="bold">PAMBAZO</text>
+</svg>

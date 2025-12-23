@@ -1,0 +1,63 @@
+# Coolify Configuration File
+# This file helps Coolify understand how to deploy your application
+
+# Application Info
+name: PAMBAZO
+type: docker-compose
+
+# Build Configuration
+build:
+  dockerfile: docker-compose.yml
+  context: .
+
+# Ports
+ports:
+  - 6000:6000  # Backend
+  - 6001:6001  # Frontend
+
+# Health Checks
+healthcheck:
+  backend:
+    path: /api/health
+    port: 6000
+    interval: 30s
+  frontend:
+    path: /
+    port: 6001
+    interval: 30s
+
+# Environment Variables (set these in Coolify UI)
+env:
+  required:
+    - POSTGRES_PASSWORD
+    - JWT_SECRET
+    - JWT_REFRESH_SECRET
+    - FRONTEND_URL
+    - VITE_API_URL
+  optional:
+    - REDIS_PASSWORD
+    - VAPID_PUBLIC_KEY
+    - VAPID_PRIVATE_KEY
+
+# Volumes
+volumes:
+  - postgres-data:/var/lib/postgresql/data
+  - backend-data:/app/data
+  - redis-data:/data
+  - ./logs:/app/logs
+
+# Domains
+domains:
+  frontend: yourdomain.com
+  backend: api.yourdomain.com
+
+# SSL
+ssl:
+  enabled: true
+  provider: letsencrypt
+
+# Deployment
+deployment:
+  strategy: rolling
+  max_surge: 1
+  max_unavailable: 0

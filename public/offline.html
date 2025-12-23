@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAMBAZO - Sin conexión</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #FFF7ED 0%, #FFFFFF 50%, #FEF3C7 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            text-align: center;
+            max-width: 500px;
+            background: white;
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(217, 119, 6, 0.1);
+            border: 1px solid #FED7AA;
+        }
+        
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #D97706, #F59E0B);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            box-shadow: 0 10px 20px rgba(217, 119, 6, 0.2);
+        }
+        
+        .bread-icon {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 8px;
+            position: relative;
+        }
+        
+        .bread-icon::before {
+            content: '🍞';
+            font-size: 24px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #D97706, #F59E0B);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #92400E;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
+        
+        .offline-icon {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #FEF3C7, #FED7AA);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            border: 3px solid #F59E0B;
+        }
+        
+        .offline-icon::before {
+            content: '📡';
+            font-size: 48px;
+            opacity: 0.7;
+        }
+        
+        .message {
+            color: #78716C;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        
+        .features {
+            background: #FFF7ED;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 30px 0;
+            border: 1px solid #FED7AA;
+        }
+        
+        .features h3 {
+            color: #92400E;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        
+        .feature-list {
+            list-style: none;
+            text-align: left;
+        }
+        
+        .feature-list li {
+            color: #78716C;
+            padding: 8px 0;
+            position: relative;
+            padding-left: 25px;
+        }
+        
+        .feature-list li::before {
+            content: '✓';
+            color: #F59E0B;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+        
+        .retry-btn {
+            background: linear-gradient(135deg, #D97706, #F59E0B);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(217, 119, 6, 0.3);
+            margin: 10px;
+        }
+        
+        .retry-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(217, 119, 6, 0.4);
+        }
+        
+        .retry-btn:active {
+            transform: translateY(0);
+        }
+        
+        .secondary-btn {
+            background: transparent;
+            color: #D97706;
+            border: 2px solid #D97706;
+            padding: 13px 28px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+        
+        .secondary-btn:hover {
+            background: #D97706;
+            color: white;
+        }
+        
+        .status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+        
+        .status.checking {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+        
+        .status.online {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+        
+        .status.offline {
+            background: #FEE2E2;
+            color: #991B1B;
+        }
+        
+        .footer {
+            margin-top: 40px;
+            color: #A8A29E;
+            font-size: 0.9rem;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .checking .offline-icon {
+            animation: pulse 2s infinite;
+        }
+        
+        @media (max-width: 640px) {
+            .container {
+                padding: 30px 20px;
+                margin: 10px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .message {
+                font-size: 1rem;
+            }
+            
+            .retry-btn, .secondary-btn {
+                width: 100%;
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <div class="bread-icon"></div>
+        </div>
+        
+        <h1>PAMBAZO</h1>
+        <div class="subtitle">Sistema de Gestión de Panadería</div>
+        
+        <div class="offline-icon"></div>
+        
+        <div class="message">
+            <strong>¡Ups! Parece que no tienes conexión a internet.</strong><br>
+            No te preocupes, algunas funciones siguen disponibles mientras estás offline.
+        </div>
+        
+        <div class="features">
+            <h3>Funciones disponibles offline:</h3>
+            <ul class="feature-list">
+                <li>Ver productos en caché</li>
+                <li>Revisar pedidos guardados</li>
+                <li>Acceder a información básica</li>
+                <li>Preparar pedidos para envío posterior</li>
+            </ul>
+        </div>
+        
+        <button class="retry-btn" onclick="checkConnection()">Reintentar conexión</button>
+        <button class="secondary-btn" onclick="goHome()">Ir al inicio</button>
+        
+        <div id="status" class="status" style="display: none;"></div>
+        
+        <div class="footer">
+            Los datos se sincronizarán automáticamente cuando recuperes la conexión.
+        </div>
+    </div>
+    
+    <script>
+        let isChecking = false;
+        
+        function showStatus(message, type) {
+            const status = document.getElementById('status');
+            status.textContent = message;
+            status.className = `status ${type}`;
+            status.style.display = 'block';
+            
+            if (type === 'checking') {
+                document.querySelector('.container').classList.add('checking');
+            } else {
+                document.querySelector('.container').classList.remove('checking');
+            }
+        }
+        
+        function hideStatus() {
+            document.getElementById('status').style.display = 'none';
+            document.querySelector('.container').classList.remove('checking');
+        }
+        
+        async function checkConnection() {
+            if (isChecking) return;
+            
+            isChecking = true;
+            showStatus('Verificando conexión...', 'checking');
+            
+            try {
+                // Intentar hacer una petición simple
+                const response = await fetch('/', {
+                    method: 'HEAD',
+                    cache: 'no-cache'
+                });
+                
+                if (response.ok) {
+                    showStatus('¡Conexión restaurada! Redirigiendo...', 'online');
+                    setTimeout(() => {
+                        window.location.href = '/';
+                    }, 1500);
+                } else {
+                    throw new Error('No response');
+                }
+            } catch (error) {
+                showStatus('Aún sin conexión. Inténtalo de nuevo.', 'offline');
+                setTimeout(hideStatus, 3000);
+            } finally {
+                isChecking = false;
+            }
+        }
+        
+        function goHome() {
+            window.location.href = '/';
+        }
+        
+        // Verificar conexión automáticamente cada 30 segundos
+        setInterval(() => {
+            if (!isChecking && navigator.onLine) {
+                checkConnection();
+            }
+        }, 30000);
+        
+        // Escuchar eventos de conexión
+        window.addEventListener('online', () => {
+            showStatus('¡Conexión restaurada!', 'online');
+            setTimeout(() => {
+                window.location.href = '/';
+            }, 1500);
+        });
+        
+        window.addEventListener('offline', () => {
+            showStatus('Conexión perdida', 'offline');
+            setTimeout(hideStatus, 3000);
+        });
+        
+        // Verificar estado inicial
+        if (navigator.onLine) {
+            setTimeout(checkConnection, 1000);
+        }
+    </script>
+</body>
+</html>

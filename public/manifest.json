@@ -1,0 +1,152 @@
+{
+  "name": "PAMBAZO - Sistema de Gestión de Panadería",
+  "short_name": "PAMBAZO",
+  "description": "Sistema completo de gestión para panaderías con roles multi-usuario: clientes, meseros, administradores y propietarios",
+  "version": "1.0.0",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#D97706",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "es-MX",
+  "dir": "ltr",
+  "categories": ["business", "food", "productivity"],
+  "icons": [
+    {
+      "src": "https://trae-api-us.mchost.guru/api/ide/v1/text_to_image?prompt=PAMBAZO%20bakery%20logo%20bread%20icon%20orange%20gradient%20modern%20design%20app%20icon%20style&image_size=square",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://trae-api-us.mchost.guru/api/ide/v1/text_to_image?prompt=PAMBAZO%20bakery%20logo%20bread%20icon%20orange%20gradient%20modern%20design%20app%20icon%20style%20512px&image_size=square_hd",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://trae-api-us.mchost.guru/api/ide/v1/text_to_image?prompt=PAMBAZO%20bakery%20logo%20bread%20icon%20orange%20gradient%20modern%20design%20app%20icon%20style%20144px&image_size=square",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://trae-api-us.mchost.guru/api/ide/v1/text_to_image?prompt=PAMBAZO%20bakery%20logo%20bread%20icon%20orange%20gradient%20modern%20design%20app%20icon%20style%2072px&image_size=square",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Catálogo de Productos",
+      "short_name": "Catálogo",
+      "description": "Ver productos disponibles en la panadería",
+      "url": "/catalog",
+      "icons": [
+        {
+          "src": "https://trae-api-us.mchost.guru/api/ide/v1/text_to_image?prompt=bread%20catalog%20icon%20orange%20gradient%20modern%20design&image_size=square",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Mis Pedidos",
+      "short_name": "Pedidos",
+      "description": "Revisar estado de pedidos activos",
+      "url": "/orders",
+      "icons": [
+        {
+          "src": "https://trae-api-us.mchost.guru/api/ide/v1/text_to_image?prompt=order%20list%20icon%20orange%20gradient%20modern%20design&image_size=square",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Control de Mesas",
+      "short_name": "Mesas",
+      "description": "Gestionar mesas del restaurante (Meseros)",
+      "url": "/waiter/tables",
+      "icons": [
+        {
+          "src": "https://trae-api-us.mchost.guru/api/ide/v1/text_to_image?prompt=restaurant%20table%20icon%20orange%20gradient%20modern%20design&image_size=square",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Panel Administrativo",
+      "short_name": "Admin",
+      "description": "Acceso rápido al panel de administración",
+      "url": "/admin/dashboard",
+      "icons": [
+        {
+          "src": "https://trae-api-us.mchost.guru/api/ide/v1/text_to_image?prompt=admin%20dashboard%20icon%20orange%20gradient%20modern%20design&image_size=square",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "https://trae-api-us.mchost.guru/api/ide/v1/text_to_image?prompt=PAMBAZO%20mobile%20app%20screenshot%20customer%20dashboard%20bread%20catalog%20modern%20UI&image_size=portrait_16_9",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Dashboard del Cliente - Catálogo de productos"
+    },
+    {
+      "src": "https://trae-api-us.mchost.guru/api/ide/v1/text_to_image?prompt=PAMBAZO%20desktop%20app%20screenshot%20waiter%20dashboard%20table%20management%20modern%20UI&image_size=landscape_16_9",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Dashboard del Mesero - Control de mesas"
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  },
+  "handle_links": "preferred",
+  "capture_links": "existing-client-navigate",
+  "protocol_handlers": [
+    {
+      "protocol": "web+pambazo",
+      "url": "/?action=%s"
+    }
+  ],
+  "file_handlers": [
+    {
+      "action": "/import",
+      "accept": {
+        "text/csv": [".csv"],
+        "application/json": [".json"]
+      }
+    }
+  ],
+  "share_target": {
+    "action": "/share",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url",
+      "files": [
+        {
+          "name": "file",
+          "accept": ["image/*", "text/plain"]
+        }
+      ]
+    }
+  }
+}

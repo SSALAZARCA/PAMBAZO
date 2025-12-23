@@ -1,0 +1,43 @@
+# Backend Dockerfile
+FROM node:18-alpine AS builder
+
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+
+# Install dependencies
+RUN npm ci
+
+# Copy backend source
+COPY api ./api
+COPY tsconfig.json ./
+
+# Build backend
+RUN npm run server:build
+
+# Production stage
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Install production dependencies
+COPY package*.json ./
+RUN npm ci --only=production
+
+# Copy built backend
+COPY --from=builder /app/api/dist ./api/dist
+COPY --from=builder /app/api/database ./api/database
+
+# Create database directory
+RUN mkdir -p /app/data
+
+# Expose backend port
+EXPOSE 6000
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
+  CMD node -e "require('http').get('http://localhost:6000/api/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"
+
+# Start backend
+CMD ["node", "api/dist/server.js"]

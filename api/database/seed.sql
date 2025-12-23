@@ -1,0 +1,2 @@
+-- SQLite Seed Data for PAMBAZO
+-- This file is intentionally empty as the schema already includes the initial users
