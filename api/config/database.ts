@@ -1,148 +1,154 @@
-import { Pool, PoolClient } from 'pg';
-import { MockDataService } from '../services/mockDataService.js';
+/**
+ * Database Configuration - Production Ready
+ * PostgreSQL only - No mock data fallback
+ */
+
+import { Pool } from 'pg';
 
 interface DatabaseConfig {
-  type: 'postgresql' | 'mock';
+  type: 'postgresql';
   pool?: Pool;
 }
 
-let dbConfig: DatabaseConfig | null = null;
-let useMockData = false;
+let dbConfig: DatabaseConfig = { type: 'postgresql' };
+let pool: Pool | null = null;
 
-// Initialize PostgreSQL connection
-function initializePostgreSQL(): Pool {
-  const pool = new Pool({
-    host: process.env.DB_HOST || 'localhost',
-    port: parseInt(process.env.DB_PORT || '5432'),
-    database: process.env.DB_NAME || 'pambaso_db',
-    user: process.env.DB_USER || 'postgres',
-    password: process.env.DB_PASSWORD || '',
-    max: 20, // Maximum number of clients in the pool
-    idleTimeoutMillis: 30000, // Close idle clients after 30 seconds
-    connectionTimeoutMillis: 2000, // Return an error after 2 seconds if connection could not be established
-    ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
-  });
+/**
+ * Initialize PostgreSQL connection
+ */
+export async function initializeDatabase(): Promise<void> {
+  const databaseUrl = process.env.DATABASE_URL;
 
-  // Handle pool errors
-  pool.on('error', (err) => {
-    console.error('❌ Unexpected error on idle client', err);
-    process.exit(-1);
-  });
+  if (!databaseUrl) {
+    throw new Error('DATABASE_URL environment variable is required for production');
+  }
 
-  return pool;
-}
-
-// Initialize database connection
-export async function initDB(): Promise<void> {
   try {
-    const pool = initializePostgreSQL();
+    console.log('🔌 Connecting to PostgreSQL...');
 
-    // Test the connection
+    pool = new Pool({
+      connectionString: databaseUrl,
+      ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : undefined,
+      max: 20,
+      idleTimeoutMillis: 30000,
+      connectionTimeoutMillis: 10000,
+    });
+
+    // Test connection
     const client = await pool.connect();
-    await client.query('SELECT NOW() as current_time, version() as pg_version');
+    await client.query('SELECT NOW()');
     client.release();
 
     dbConfig = { type: 'postgresql', pool };
-    useMockData = false;
-    console.log('✅ Connected to PostgreSQL database');
-    console.log(`📊 Database: ${process.env.DB_NAME || 'pambaso_db'} on ${process.env.DB_HOST || 'localhost'}:${process.env.DB_PORT || '5432'}`);
 
+    console.log('✅ PostgreSQL connected successfully');
+    console.log('📊 Database ready for production');
   } catch (error: any) {
-    console.warn('⚠️ PostgreSQL connection failed, using mock data service');
-    console.warn('💡 To use PostgreSQL: install it and run migrations');
-    console.warn('📖 See DATABASE_SETUP.md for installation instructions');
-
-    dbConfig = { type: 'mock' };
-    useMockData = true;
-    console.log('✅ Using mock data service for development');
-    console.log('📊 Mock database initialized with sample data');
+    console.error('❌ PostgreSQL connection failed:', error.message);
+    throw new Error(`Database connection failed: ${error.message}`);
   }
 }
 
-// Get database connection pool
-export function getDB(): Pool {
-  if (!dbConfig || dbConfig.type !== 'postgresql') {
-    throw new Error('PostgreSQL not available. Using mock data service.');
-  }
-  return dbConfig.pool!;
-}
-
-// Check if using mock data
-export function isUsingMockData(): boolean {
-  return useMockData;
-}
-
-// Get mock data service
-export function getMockService() {
-  return MockDataService;
-}
-
-// Execute query with automatic connection handling
-export async function query(text: string, params?: any[]): Promise<any> {
-  if (!dbConfig) {
-    throw new Error('Database not initialized. Call initDB() first.');
+/**
+ * Execute a query
+ */
+export async function query(sql: string, params?: any[]): Promise<any[]> {
+  if (!pool) {
+    throw new Error('Database not initialized. Call initializeDatabase() first.');
   }
 
-  if (dbConfig.type === 'mock') {
-    throw new Error('Query not supported with mock data. Use getMockService() instead.');
-  }
-
-  const client = await dbConfig.pool!.connect();
   try {
-    const result = await client.query(text, params);
+    const result = await pool.query(sql, params);
+    return result.rows;
+  } catch (error: any) {
+    console.error('Query error:', error);
+    throw error;
+  }
+}
+
+/**
+ * Execute a query and return a single row
+ */
+export async function queryOne(sql: string, params?: any[]): Promise<any | null> {
+  const rows = await query(sql, params);
+  return rows.length > 0 ? rows[0] : null;
+}
+
+/**
+ * Execute within a transaction
+ */
+export async function transaction<T>(callback: (client: any) => Promise<T>): Promise<T> {
+  if (!pool) {
+    throw new Error('Database not initialized');
+  }
+
+  const client = await pool.connect();
+
+  try {
+    await client.query('BEGIN');
+    const result = await callback(client);
+    await client.query('COMMIT');
     return result;
+  } catch (error) {
+    await client.query('ROLLBACK');
+    throw error;
   } finally {
     client.release();
   }
 }
 
-// Get a client from the pool for transactions
-export async function getClient(): Promise<PoolClient> {
-  if (!dbConfig || dbConfig.type !== 'postgresql') {
-    throw new Error('Transactions not supported with mock data.');
+/**
+ * Get database type (always postgresql in production)
+ */
+export function getDatabaseType(): 'postgresql' {
+  return 'postgresql';
+}
+
+/**
+ * Get database status
+ */
+export async function getDatabaseStatus() {
+  if (!pool) {
+    return { connected: false, type: 'postgresql' };
   }
-  return await dbConfig.pool!.connect();
-}
 
-// Get database type
-export function getDatabaseType(): 'postgresql' | 'mock' {
-  return dbConfig?.type || 'mock';
-}
-
-// Close database connections
-export async function closeDB(): Promise<void> {
   try {
-    if (dbConfig?.type === 'postgresql' && dbConfig.pool) {
-      await dbConfig.pool.end();
-      console.log('✅ PostgreSQL connection pool closed');
-    } else if (dbConfig?.type === 'mock') {
-      console.log('✅ Mock data service closed');
-    }
-    dbConfig = null;
-    useMockData = false;
-  } catch (error: any) {
-    console.error('❌ Error closing database connections:', error);
+    const result = await pool.query('SELECT NOW() as time, version() as version');
+    return {
+      connected: true,
+      type: 'postgresql',
+      serverTime: result.rows[0].time,
+      version: result.rows[0].version,
+      poolSize: pool.totalCount,
+      idleConnections: pool.idleCount,
+      waitingClients: pool.waitingCount
+    };
+  } catch (error) {
+    return { connected: false, type: 'postgresql', error: (error as Error).message };
   }
 }
 
-// Export default for compatibility
-export default { query, getClient, getDB, getDatabaseType, closeDB };
+/**
+ * Close database connection
+ */
+export async function closeDatabase(): Promise<void> {
+  if (pool) {
+    try {
+      await pool.end();
+      console.log('✅ PostgreSQL connection closed');
+    } catch (error) {
+      console.error('Error closing database:', error);
+    }
+    pool = null;
+  }
+}
 
-// Graceful shutdown
-process.on('SIGINT', async () => {
-  console.log('\n🔄 Gracefully shutting down database connections...');
-  await closeDB();
-  process.exit(0);
-});
-
-process.on('SIGTERM', async () => {
-  console.log('\n🔄 Gracefully shutting down database connections...');
-  await closeDB();
-  process.exit(0);
-});
-
-process.on('SIGQUIT', async () => {
-  console.log('\n🔄 Gracefully shutting down database connections...');
-  await closeDB();
-  process.exit(0);
-});
+export default {
+  initializeDatabase,
+  query,
+  queryOne,
+  transaction,
+  getDatabaseType,
+  getDatabaseStatus,
+  closeDatabase
+};

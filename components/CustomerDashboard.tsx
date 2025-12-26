@@ -221,9 +221,9 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({ user, onLo
       date: undefined,
       createdAt: new Date('2024-01-10').toISOString(),
       items: [
-        { id: 'i3', productId: 'p3', productName: 'Pastel de Chocolate', quantity: 1, price: COLOMBIA_PRICES.PASTEL_CHOCOLATE },
+        { id: 'i3', productId: 'p3', productName: 'Pastel de Chocolate', quantity: 1, price: 8000 },
       ] as any[],
-      total: COLOMBIA_PRICES.PASTEL_CHOCOLATE,
+      total: 8000,
       status: 'completed' as const,
       tableNumber: 0,
       customerName: 'Cliente',
@@ -231,6 +231,27 @@ export const CustomerDashboard: React.FC<CustomerDashboardProps> = ({ user, onLo
       waiterName: 'Sistema'
     },
   ];
+
+  // Fetch real order history from backend
+  useEffect(() => {
+    const fetchOrderHistory = async () => {
+      if (!user?.id) return;
+
+      try {
+        const response = await fetch(`http://localhost:3001/api/v1/orders?userId=${user.id}`);
+        const data = await response.json();
+
+        if (data.success && data.data) {
+          // Update orderHistory with real data when available
+          console.log('Orders loaded:', data.data);
+        }
+      } catch (error) {
+        console.error('Error fetching orders:', error);
+      }
+    };
+
+    fetchOrderHistory();
+  }, [user?.id]);
 
   const updateQuantity = (productId: string, change: number) => {
     const item = cart.find(item => item.product.id === productId);

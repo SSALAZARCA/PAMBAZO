@@ -14,6 +14,8 @@ import inventoryRoutes from './inventory';
 import reportsRoutes from './reports';
 import tipsRoutes from './tips';
 import settingsRoutes from './settings';
+import adminRoutes from './admin';
+import employeeRoutes from './employee';
 
 const router = Router();
 
@@ -34,6 +36,8 @@ router.use('/inventory', inventoryRoutes);
 router.use('/reports', reportsRoutes);
 router.use('/tips', tipsRoutes);
 router.use('/settings', settingsRoutes);
+router.use('/admin', adminRoutes);
+router.use('/employee', employeeRoutes);
 
 // Ruta de health check específica para v1
 router.get('/health', (req, res) => {
