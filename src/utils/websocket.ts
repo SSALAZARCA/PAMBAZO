@@ -6,12 +6,9 @@ import { io, Socket } from 'socket.io-client';
 
 export class WebSocketClient {
     private socket: Socket | null = null;
-    private token: string | null = null;
 
     connect(token: string) {
-        this.token = token;
-
-        this.socket = io(import.meta.env.VITE_WS_URL || 'http://localhost:3001', {
+        this.socket = io(import.meta.env['VITE_WS_URL'] || 'http://localhost:3001', {
             auth: {
                 token: token
             },

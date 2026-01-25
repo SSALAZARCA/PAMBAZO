@@ -1,0 +1,17 @@
+﻿
+> pambazo-bakery-management@1.0.0 type-check
+> tsc --noEmit
+
+src/services/apiClient.ts(4,29): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+src/services/authService.ts(3,29): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+src/utils/pushNotifications.ts(46,17): error TS2322: Type 'Uint8Array<ArrayBufferLike>' is not assignable to type 'string | BufferSource | null | undefined'.
+  Type 'Uint8Array<ArrayBufferLike>' is not assignable to type 'ArrayBufferView<ArrayBuffer>'.
+    Types of property 'buffer' are incompatible.
+      Type 'ArrayBufferLike' is not assignable to type 'ArrayBuffer'.
+        Type 'SharedArrayBuffer' is not assignable to type 'ArrayBuffer'.
+          Types of property '[Symbol.toStringTag]' are incompatible.
+            Type '"SharedArrayBuffer"' is not assignable to type '"ArrayBuffer"'.
+src/utils/pushNotifications.ts(90,36): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+src/utils/pushNotifications.ts(103,36): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+src/utils/websocket.ts(9,13): error TS6133: 'token' is declared but its value is never read.
+src/utils/websocket.ts(14,38): error TS2339: Property 'env' does not exist on type 'ImportMeta'.

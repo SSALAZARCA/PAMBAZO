@@ -1,0 +1,17 @@
+﻿components/InventoryManagement.tsx(404,7): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+components/QRMenuSystem.tsx(382,72): error TS2345: Argument of type 'QRTemplate | undefined' is not assignable to parameter of type 'QRTemplate | (() => QRTemplate)'.
+  Type 'undefined' is not assignable to type 'QRTemplate | (() => QRTemplate)'.
+components/QRMenuSystem.tsx(732,12): error TS2375: Type '{ onSubmit: (menuData: Partial<QRMenu>) => void; onCancel: () => void; editingMenu: QRMenu | undefined; }' is not assignable to type '{ onSubmit: (menu: Partial<QRMenu>) => void; onCancel: () => void; editingMenu?: QRMenu; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'editingMenu' are incompatible.
+    Type 'QRMenu | undefined' is not assignable to type 'QRMenu'.
+      Type 'undefined' is not assignable to type 'QRMenu'.
+components/ui/resizable.tsx(12,51): error TS2339: Property 'PanelGroup' does not exist on type 'typeof import("D:/DESARROLLOS/PAMBASO 2.1/node_modules/react-resizable-panels/dist/react-resizable-panels")'.
+components/ui/resizable.tsx(14,25): error TS2339: Property 'PanelGroup' does not exist on type 'typeof import("D:/DESARROLLOS/PAMBASO 2.1/node_modules/react-resizable-panels/dist/react-resizable-panels")'.
+components/ui/resizable.tsx(35,51): error TS2339: Property 'PanelResizeHandle' does not exist on type 'typeof import("D:/DESARROLLOS/PAMBASO 2.1/node_modules/react-resizable-panels/dist/react-resizable-panels")'.
+components/ui/resizable.tsx(39,25): error TS2339: Property 'PanelResizeHandle' does not exist on type 'typeof import("D:/DESARROLLOS/PAMBASO 2.1/node_modules/react-resizable-panels/dist/react-resizable-panels")'.
+components/ui/resizable.tsx(52,26): error TS2339: Property 'PanelResizeHandle' does not exist on type 'typeof import("D:/DESARROLLOS/PAMBASO 2.1/node_modules/react-resizable-panels/dist/react-resizable-panels")'.
+components/ui/slider.tsx(27,6): error TS2375: Type '{ children: (Element | Element[])[]; name?: string; disabled?: boolean; orientation?: "horizontal" | "vertical" | undefined; dir?: Direction; step?: number; minStepsBetweenThumbs?: number; ... 272 more ...; className: string; }' is not assignable to type 'SliderProps' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'value' are incompatible.
+    Type 'number[] | undefined' is not assignable to type 'number[]'.
+      Type 'undefined' is not assignable to type 'number[]'.

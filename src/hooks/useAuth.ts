@@ -4,7 +4,7 @@
  */
 import { useState, useEffect, useCallback } from 'react';
 import { authAPI, setAuthToken, getAuthToken, type User } from '../services/api';
-import { useStore } from '../../store/useStore';
+import { useStore } from '../store/useStore';
 import { toast } from 'sonner';
 
 interface AuthState {
@@ -99,24 +99,28 @@ export const useAuth = (): UseAuthReturn => {
       const response = await authAPI.login(email, password);
 
       if (response.success && response.data?.tokens?.accessToken && response.data?.user) {
+        // 1. Set token immediately in localStorage and memory
         setAuthToken(response.data.tokens.accessToken);
 
-        // Map API user to Shared user (dates)
+        // 2. Map user data
         const mappedUser: User = {
           ...response.data.user,
           ...(response.data.user.createdAt && { createdAt: new Date(response.data.user.createdAt) }),
           ...(response.data.user.lastLogin && { lastLogin: new Date(response.data.user.lastLogin) }),
-          role: response.data.user.role as any // Ensure role matches
+          role: response.data.user.role as any
         };
 
+        // 3. Update state synchronously to prevent redirect loop
         setAuthState({
           user: mappedUser,
           isLoading: false,
           isAuthenticated: true,
         });
 
-        // Load users if user has permissions
-        await loadUsersIfAuthorized(mappedUser);
+        // 4. Force a small delay before any potential heavy async operations to let React state settle
+        setTimeout(async () => {
+          await loadUsersIfAuthorized(mappedUser);
+        }, 100);
 
         toast.success(`¡Bienvenido, ${mappedUser.name}!`);
         return true;

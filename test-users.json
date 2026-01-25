@@ -1,0 +1,227 @@
+{
+    "testUsers": [
+        {
+            "id": 1,
+            "name": "Carlos Administrador",
+            "email": "admin@pambazo.com",
+            "password": "pambazo123",
+            "role": "admin",
+            "phone": "+57 300 123 4567",
+            "description": "Super administrador con acceso total al sistema",
+            "dashboardUrl": "/admin",
+            "features": [
+                "Gestión de usuarios",
+                "Configuración del sistema",
+                "Reportes completos",
+                "Acceso a todas las secciones"
+            ]
+        },
+        {
+            "id": 2,
+            "name": "Juan Panadero",
+            "email": "baker@pambazo.com",
+            "password": "pambazo123",
+            "role": "baker",
+            "phone": "+57 300 234 5678",
+            "description": "Panadero principal especializado en masa madre",
+            "dashboardUrl": "/baker",
+            "features": [
+                "Control de hornos",
+                "Gestión de producción",
+                "Lotes de panadería",
+                "Alertas de temperatura"
+            ]
+        },
+        {
+            "id": 3,
+            "name": "Pedro Hornero",
+            "email": "baker2@pambazo.com",
+            "password": "pambazo123",
+            "role": "baker",
+            "phone": "+57 300 345 6789",
+            "description": "Panadero asistente especializado en pan tradicional",
+            "dashboardUrl": "/baker",
+            "features": [
+                "Control de hornos",
+                "Gestión de producción",
+                "Lotes de panadería"
+            ]
+        },
+        {
+            "id": 4,
+            "name": "María Propietaria",
+            "email": "owner@pambazo.com",
+            "password": "pambazo123",
+            "role": "owner",
+            "phone": "+57 300 456 7890",
+            "description": "Propietaria del negocio con acceso a analytics",
+            "dashboardUrl": "/owner",
+            "features": [
+                "Gráficos de ventas",
+                "Análisis de productos",
+                "KPIs del negocio",
+                "Reportes financieros",
+                "Exportación de datos"
+            ]
+        },
+        {
+            "id": 5,
+            "name": "Ana Cocinera",
+            "email": "kitchen@pambazo.com",
+            "password": "pambazo123",
+            "role": "kitchen",
+            "phone": "+57 300 567 8901",
+            "description": "Chef de cocina encargada de preparación de pedidos",
+            "dashboardUrl": "/kitchen",
+            "features": [
+                "Órdenes pendientes",
+                "Gestión de tiempos",
+                "Recetas",
+                "Control de preparación"
+            ]
+        },
+        {
+            "id": 6,
+            "name": "Luis Ayudante",
+            "email": "kitchen2@pambazo.com",
+            "password": "pambazo123",
+            "role": "kitchen",
+            "phone": "+57 300 678 9012",
+            "description": "Ayudante de cocina",
+            "dashboardUrl": "/kitchen",
+            "features": [
+                "Órdenes pendientes",
+                "Gestión de tiempos"
+            ]
+        },
+        {
+            "id": 7,
+            "name": "Sofia Mesera",
+            "email": "waiter@pambazo.com",
+            "password": "pambazo123",
+            "role": "waiter",
+            "phone": "+57 300 789 0123",
+            "description": "Mesera principal - Mesas 1-10",
+            "dashboardUrl": "/waiter",
+            "features": [
+                "Gestión de mesas",
+                "Toma de pedidos",
+                "Cierre de cuentas",
+                "Asignación de mesas"
+            ]
+        },
+        {
+            "id": 8,
+            "name": "Diego Camarero",
+            "email": "waiter2@pambazo.com",
+            "password": "pambazo123",
+            "role": "waiter",
+            "phone": "+57 300 890 1234",
+            "description": "Mesero turno noche - Mesas 11-20",
+            "dashboardUrl": "/waiter",
+            "features": [
+                "Gestión de mesas",
+                "Toma de pedidos",
+                "Cierre de cuentas"
+            ]
+        },
+        {
+            "id": 9,
+            "name": "Roberto Cliente",
+            "email": "customer@pambazo.com",
+            "password": "pambazo123",
+            "role": "customer",
+            "phone": "+57 300 901 2345",
+            "description": "Cliente VIP - Nivel Gold",
+            "dashboardUrl": "/customer",
+            "loyaltyPoints": 450,
+            "loyaltyLevel": "Gold",
+            "features": [
+                "Menú de productos",
+                "Carrito de compras",
+                "Historial de pedidos",
+                "Programa de lealtad",
+                "Favoritos"
+            ]
+        },
+        {
+            "id": 10,
+            "name": "Laura Compradora",
+            "email": "customer2@pambazo.com",
+            "password": "pambazo123",
+            "role": "customer",
+            "phone": "+57 300 012 3456",
+            "description": "Cliente regular - Nivel Silver",
+            "dashboardUrl": "/customer",
+            "loyaltyPoints": 120,
+            "loyaltyLevel": "Silver",
+            "features": [
+                "Menú de productos",
+                "Carrito de compras",
+                "Historial de pedidos",
+                "Programa de lealtad"
+            ]
+        },
+        {
+            "id": 11,
+            "name": "Miguel Nuevo",
+            "email": "customer3@pambazo.com",
+            "password": "pambazo123",
+            "role": "customer",
+            "phone": "+57 300 123 4567",
+            "description": "Cliente nuevo - Nivel Bronze",
+            "dashboardUrl": "/customer",
+            "loyaltyPoints": 0,
+            "loyaltyLevel": "Bronze",
+            "features": [
+                "Menú de productos",
+                "Carrito de compras"
+            ]
+        }
+    ],
+    "summary": {
+        "totalUsers": 11,
+        "byRole": {
+            "admin": 1,
+            "baker": 2,
+            "owner": 1,
+            "kitchen": 2,
+            "waiter": 2,
+            "customer": 3
+        },
+        "universalPassword": "pambazo123",
+        "loginUrl": "http://localhost:5173/login"
+    },
+    "quickAccess": {
+        "admin": {
+            "email": "admin@pambazo.com",
+            "password": "pambazo123",
+            "url": "http://localhost:5173/login"
+        },
+        "baker": {
+            "email": "baker@pambazo.com",
+            "password": "pambazo123",
+            "url": "http://localhost:5173/login"
+        },
+        "owner": {
+            "email": "owner@pambazo.com",
+            "password": "pambazo123",
+            "url": "http://localhost:5173/login"
+        },
+        "kitchen": {
+            "email": "kitchen@pambazo.com",
+            "password": "pambazo123",
+            "url": "http://localhost:5173/login"
+        },
+        "waiter": {
+            "email": "waiter@pambazo.com",
+            "password": "pambazo123",
+            "url": "http://localhost:5173/login"
+        },
+        "customer": {
+            "email": "customer@pambazo.com",
+            "password": "pambazo123",
+            "url": "http://localhost:5173/login"
+        }
+    }
+}

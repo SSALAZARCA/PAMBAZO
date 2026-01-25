@@ -3,7 +3,7 @@
  * Centralized service for all HTTP requests to the backend
  */
 
-const API_BASE_URL = (import.meta as any).env?.VITE_API_URL || 'http://localhost:3001/api/v1';
+const API_BASE_URL = import.meta.env['VITE_API_URL'] || 'http://localhost:3001/api/v1';
 
 // Types
 export interface ApiResponse<T = any> {
@@ -70,7 +70,7 @@ export interface Order {
   id: string;
   user_id?: string;
   table_id?: string;
-  status: 'pending' | 'preparing' | 'ready' | 'served' | 'completed' | 'cancelled';
+  status: 'pending' | 'preparing' | 'ready' | 'served' | 'awaiting_payment' | 'completed' | 'cancelled';
   order_type: 'dine_in' | 'takeaway' | 'delivery';
   total: number;
   notes?: string;
@@ -98,16 +98,20 @@ export interface RestaurantTable {
   capacity: number;
   location?: string;
   is_available: boolean;
+  status?: 'available' | 'occupied' | 'reserved' | 'cleaning';
+  currentOrder?: any;
+  current_order?: Order;
   created_at: string;
   updated_at: string;
-  current_order?: Order;
 }
 
 export interface InventoryItem {
   id: string;
   item_name: string;
+  name?: string; // Compatibility with backend
   product_id?: string;
   current_stock: number;
+  stock?: number; // Compatibility with backend
   min_stock: number;
   max_stock?: number;
   unit: string;
@@ -148,7 +152,8 @@ export const getAuthToken = () => authToken;
 
 // HTTP client with auth headers
 const apiClient = async (endpoint: string, options: RequestInit = {}): Promise<Response> => {
-  const url = `${API_BASE_URL}${endpoint}`;
+  const separator = endpoint.includes('?') ? '&' : '?';
+  const url = `${API_BASE_URL}${endpoint}${separator}_t=${Date.now()}`;
 
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
@@ -345,7 +350,7 @@ export const tablesAPI = {
     post<{ table: RestaurantTable }>('/tables', data),
 
   update: (id: string, data: Partial<RestaurantTable>) =>
-    put<{ table: RestaurantTable }>(`/tables/${id}`, data),
+    patch<{ table: RestaurantTable }>(`/tables/${id}`, data),
 
   delete: (id: string) =>
     del(`/tables/${id}`),
@@ -382,8 +387,8 @@ export const inventoryAPI = {
   delete: (id: string) =>
     del(`/inventory/${id}`),
 
-  updateStock: (id: string, quantity: number, movement_type: 'in' | 'out', reason: string, cost_per_unit?: number) =>
-    patch(`/inventory/${id}/stock`, { quantity, movement_type, reason, cost_per_unit }),
+  updateStock: (id: string, quantity: number, movement_type: 'in' | 'out', reason: string, cost?: number, supplier?: string, is_cash_payment?: boolean) =>
+    patch(`/inventory/${id}/stock`, { quantity, movement_type, reason, cost, supplier, is_cash_payment }),
 
   getMovements: (params?: { inventory_id?: string; movement_type?: string; start_date?: string; end_date?: string; page?: number; limit?: number }) => {
     const searchParams = new URLSearchParams();
@@ -418,11 +423,55 @@ export const usersAPI = {
   getById: (id: string) =>
     get<{ user: User }>(`/users/${id}`),
 
+  create: (data: Partial<User> & { password?: string }) =>
+    post<{ user: User }>('/users', data),
+
   update: (id: string, data: Partial<User>) =>
     put<{ user: User }>(`/users/${id}`, data),
 
   delete: (id: string) =>
     del(`/users/${id}`),
+};
+
+// Analytics API
+export const analyticsAPI = {
+  getSales: () => get('/analytics/sales'),
+  getProducts: () => get('/analytics/products'),
+  getOverview: () => get('/stats/overview'),
+};
+
+export const financeAPI = {
+  getSummary: () => get('/finance/summary'),
+};
+
+export const shiftsAPI = {
+  getAll: () => get('/shifts'),
+  create: (data: any) => post('/shifts', data),
+  update: (id: string, data: any) => patch(`/shifts/${id}`, data),
+  delete: (id: string) => del(`/shifts/${id}`),
+};
+
+// Production API (Baker)
+export const productionAPI = {
+  deductMaterials: (materials: { materialId: string; quantity: number }[]) =>
+    post('/production/batches/deduct-materials', { materials }),
+
+  addFinishedProduct: (productName: string, quantity: number) =>
+    post('/production/batches/add-finished-product', { productName, quantity }),
+};
+
+// Loyalty API
+export const loyaltyAPI = {
+  getPoints: (customerId: number) => get(`/loyalty/${customerId}`),
+  redeem: (data: { customerId: number; points: number; reward: any }) => post('/loyalty/redeem', data),
+  getRewards: () => get<{ id: number; name: string; points: number; image: string; description: string; productId?: string }[]>('/loyalty/rewards'),
+
+  // Management
+  getConfig: () => get<{ amountPerPoint: number; enabled: boolean }>('/loyalty/config'),
+  updateConfig: (data: { amountPerPoint: number; enabled: boolean }) => post('/loyalty/config', data),
+  createReward: (data: any) => post('/loyalty/rewards', data),
+  updateReward: (id: number, data: any) => put(`/loyalty/rewards/${id}`, data),
+  deleteReward: (id: number) => del(`/loyalty/rewards/${id}`),
 };
 
 export default {
@@ -433,4 +482,9 @@ export default {
   tables: tablesAPI,
   inventory: inventoryAPI,
   users: usersAPI,
+  analytics: analyticsAPI,
+  finance: financeAPI,
+  shifts: shiftsAPI,
+  production: productionAPI,
+  loyalty: loyaltyAPI,
 };

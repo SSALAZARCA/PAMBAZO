@@ -81,7 +81,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ isMobile = false }) => {
       }
 
       if (success) {
-        navigate('/', { replace: true });
+        navigate('/dashboard', { replace: true });
       }
     } catch (error) {
       console.error('Authentication error:', error);

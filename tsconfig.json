@@ -24,18 +24,6 @@
     "paths": {
       "@/*": [
         "./src/*"
-      ],
-      "@/components/*": [
-        "./components/*"
-      ],
-      "@/styles/*": [
-        "./styles/*"
-      ],
-      "@/public/*": [
-        "./public/*"
-      ],
-      "@/types/*": [
-        "./types/*"
       ]
     },
     "exactOptionalPropertyTypes": true,
@@ -49,19 +37,13 @@
     "emitDecoratorMetadata": true,
     "types": [
       "node",
-      "express"
+      "express",
+      "vite/client"
     ]
   },
   "include": [
     "src/**/*.ts",
-    "src/**/*.tsx",
-    "components/**/*.ts",
-    "components/**/*.tsx",
-    "store/**/*.ts",
-    "hooks/**/*.ts",
-    "lib/**/*.ts",
-    "App.tsx",
-    "main.tsx"
+    "src/**/*.tsx"
   ],
   "exclude": [
     "node_modules",

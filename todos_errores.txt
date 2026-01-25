@@ -1,0 +1,42 @@
+﻿App.tsx(82,47): error TS2322: Type '{ user: User; onLogout: () => void; }' is not assignable to type 'IntrinsicAttributes & { user: User; }'.
+  Property 'onLogout' does not exist on type 'IntrinsicAttributes & { user: User; }'.
+components/InventoryManagement.tsx(404,7): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+components/NotificationSettings.tsx(36,27): error TS6133: 'updates' is declared but its value is never read.
+components/QRMenuSystem.tsx(22,1): error TS6192: All imports in import declaration are unused.
+components/QRMenuSystem.tsx(185,28): error TS6133: 'url' is declared but its value is never read.
+components/QRMenuSystem.tsx(382,72): error TS2345: Argument of type 'QRTemplate | undefined' is not assignable to parameter of type 'QRTemplate | (() => QRTemplate)'.
+  Type 'undefined' is not assignable to type 'QRTemplate | (() => QRTemplate)'.
+components/QRMenuSystem.tsx(393,11): error TS2375: Type '{ name: string; description: string; tableNumber: number | undefined; location: string; url: string; isActive: true; customization: { primaryColor: string; secondaryColor: string; fontFamily: string; showPrices: true; showImages: true; showDescriptions: true; language: string; }; }' is not assignable to type 'Partial<QRMenu>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'tableNumber' are incompatible.
+    Type 'number | undefined' is not assignable to type 'number'.
+      Type 'undefined' is not assignable to type 'number'.
+components/QRMenuSystem.tsx(732,12): error TS2375: Type '{ onSubmit: (menuData: Partial<QRMenu>) => void; onCancel: () => void; editingMenu: QRMenu | undefined; }' is not assignable to type '{ onSubmit: (menu: Partial<QRMenu>) => void; onCancel: () => void; editingMenu?: QRMenu; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'editingMenu' are incompatible.
+    Type 'QRMenu | undefined' is not assignable to type 'QRMenu'.
+      Type 'undefined' is not assignable to type 'QRMenu'.
+components/RatingSystem.tsx(170,11): error TS2339: Property 'currentUser' does not exist on type 'PAMBAZOStore'.
+components/RatingSystem.tsx(188,13): error TS2375: Type '{ productId: string; orderId: string | undefined; rating: number; title: string; comment: string; userId: any; userName: any; userAvatar: any; verified: boolean; helpful: number; notHelpful: number; createdAt: Date; updatedAt: Date; }' is not assignable to type 'Partial<Review>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'orderId' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+components/RatingSystem.tsx(443,26): error TS6133: 'reviewId' is declared but its value is never read.
+components/RatingSystem.tsx(443,44): error TS6133: 'helpful' is declared but its value is never read.
+components/RatingSystem.tsx(447,25): error TS6133: 'reviewId' is declared but its value is never read.
+components/SkeletonLoaders.tsx(211,15): error TS2322: Type '{ className: string; style: { width: string; }; }' is not assignable to type 'IntrinsicAttributes & SkeletonProps'.
+  Property 'style' does not exist on type 'IntrinsicAttributes & SkeletonProps'.
+components/ui/resizable.tsx(12,51): error TS2339: Property 'PanelGroup' does not exist on type 'typeof import("D:/DESARROLLOS/PAMBASO 2.1/node_modules/react-resizable-panels/dist/react-resizable-panels")'.
+components/ui/resizable.tsx(14,25): error TS2339: Property 'PanelGroup' does not exist on type 'typeof import("D:/DESARROLLOS/PAMBASO 2.1/node_modules/react-resizable-panels/dist/react-resizable-panels")'.
+components/ui/resizable.tsx(35,51): error TS2339: Property 'PanelResizeHandle' does not exist on type 'typeof import("D:/DESARROLLOS/PAMBASO 2.1/node_modules/react-resizable-panels/dist/react-resizable-panels")'.
+components/ui/resizable.tsx(39,25): error TS2339: Property 'PanelResizeHandle' does not exist on type 'typeof import("D:/DESARROLLOS/PAMBASO 2.1/node_modules/react-resizable-panels/dist/react-resizable-panels")'.
+components/ui/resizable.tsx(52,26): error TS2339: Property 'PanelResizeHandle' does not exist on type 'typeof import("D:/DESARROLLOS/PAMBASO 2.1/node_modules/react-resizable-panels/dist/react-resizable-panels")'.
+components/ui/slider.tsx(27,6): error TS2375: Type '{ children: (Element | Element[])[]; name?: string; disabled?: boolean; orientation?: "horizontal" | "vertical" | undefined; dir?: Direction; step?: number; minStepsBetweenThumbs?: number; ... 272 more ...; className: string; }' is not assignable to type 'SliderProps' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'value' are incompatible.
+    Type 'number[] | undefined' is not assignable to type 'number[]'.
+      Type 'undefined' is not assignable to type 'number[]'.
+components/ui/sonner.tsx(10,6): error TS2375: Type '{ invert?: boolean; theme: "system" | "light" | "dark" | undefined; position?: Position; hotkey?: string[]; richColors?: boolean; expand?: boolean; duration?: number; gap?: number; visibleToasts?: number; ... 11 more ...; pauseWhenPageIsHidden?: boolean; }' is not assignable to type 'ToasterProps' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'theme' are incompatible.
+    Type '"system" | "light" | "dark" | undefined' is not assignable to type '"system" | "light" | "dark"'.
+      Type 'undefined' is not assignable to type '"system" | "light" | "dark"'.
+src/components/HistoricalProductsView.tsx(91,17): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.

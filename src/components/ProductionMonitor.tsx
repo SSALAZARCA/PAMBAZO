@@ -1,6 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { useStore } from '../../store/useStore';
+import { useStore } from '../store/useStore';
 import { ProductionBatch, OvenStatus } from '../../shared/types';
+import { Button } from './ui/button';
+import { Input } from './ui/input';
+import { Label } from './ui/label';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from './ui/dialog';
 import {
   Clock,
   Thermometer,
@@ -10,6 +21,9 @@ import {
   Flame,
   RefreshCw
 } from 'lucide-react';
+import { toast } from 'sonner';
+import api from '../services/api';
+
 
 interface ProductionMonitorProps {
   className?: string;
@@ -26,6 +40,46 @@ const ProductionMonitor: React.FC<ProductionMonitorProps> = ({ className = '' })
   const [currentTime, setCurrentTime] = useState(new Date());
   const [selectedBatch, setSelectedBatch] = useState<string | null>(null);
   const [autoRefresh, setAutoRefresh] = useState(true);
+
+  // Completion Dialog State
+  const [completionBatch, setCompletionBatch] = useState<ProductionBatch | null>(null);
+  const [finalQuantity, setFinalQuantity] = useState<number>(0);
+
+  const handleOpenCompletion = (batch: ProductionBatch) => {
+    setCompletionBatch(batch);
+    setFinalQuantity(batch.quantity);
+  };
+
+  const handleConfirmCompletion = async () => {
+    if (!completionBatch) return;
+
+    try {
+      // 1. Actualizar estado del lote
+      const updates: Partial<ProductionBatch> = { status: 'completed', actualEndTime: new Date() };
+      updateProductionBatch(completionBatch.id, updates);
+
+      // 2. Agregar producto terminado al inventario (API REAL)
+      const inventoryResponse = await api.production.addFinishedProduct(
+        completionBatch.productName,
+        finalQuantity
+      );
+
+      if (inventoryResponse.success) {
+        toast.success(
+          `✅ Producción finalizada: +${finalQuantity} unidades de ${completionBatch.productName} ingresadas al inventario.`,
+          { duration: 5000 }
+        );
+      } else {
+        toast.error('Error al ingresar el producto al inventario');
+      }
+
+      setCompletionBatch(null);
+    } catch (error) {
+      console.error('Error completing batch:', error);
+      toast.error('Error al finalizar la producción');
+    }
+  };
+
 
   // Actualizar tiempo cada 30 segundos
   useEffect(() => {
@@ -325,7 +379,7 @@ const ProductionMonitor: React.FC<ProductionMonitorProps> = ({ className = '' })
                           <button
                             onClick={(e) => {
                               e.stopPropagation();
-                              handleBatchStatusUpdate(batch.id, 'completed');
+                              handleOpenCompletion(batch);
                             }}
                             className="px-3 py-1 bg-gray-500 text-white text-xs rounded-lg hover:bg-gray-600 transition-colors"
                           >
@@ -404,6 +458,42 @@ const ProductionMonitor: React.FC<ProductionMonitorProps> = ({ className = '' })
           </div>
         </div>
       )}
+      {/* Completion Dialog */}
+      <Dialog open={!!completionBatch} onOpenChange={(open) => !open && setCompletionBatch(null)}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Finalizar Producción</DialogTitle>
+            <DialogDescription>
+              Confirma la cantidad final obtenida para ingresarla al inventario.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid gap-2">
+              <Label>Producto</Label>
+              <div className="text-lg font-bold">{completionBatch?.productName}</div>
+            </div>
+            <div className="grid gap-2">
+              <Label>Cantidad Planificada</Label>
+              <div className="text-gray-500">{completionBatch?.quantity} unidades</div>
+            </div>
+            <div className="grid gap-2">
+              <Label>Cantidad Real Producida (Entrada a Inventario)</Label>
+              <Input
+                type="number"
+                value={finalQuantity}
+                onChange={(e) => setFinalQuantity(Number(e.target.value))}
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setCompletionBatch(null)}>Cancelar</Button>
+            <Button onClick={handleConfirmCompletion} className="bg-green-600 hover:bg-green-700 text-white">
+              Confirmar Entrada
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
     </div>
   );
 };

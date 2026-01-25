@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useStore } from '../../store/useStore';
+import { useStore } from '../store/useStore';
 import { BakerKPI, ProductionBatch, MaterialUsage } from '../../shared/types';
 import {
   TrendingUp,

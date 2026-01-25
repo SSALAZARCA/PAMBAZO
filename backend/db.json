@@ -1,0 +1,1225 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Carlos Administrador",
+      "email": "admin@pambazo.com",
+      "password": "$2b$10$g8lOFVQyDjHL9tkas2voke.wXPO2b/K3e8XhBgTv5w2cqJhki2zI6",
+      "role": "admin",
+      "phone": "+57 300 123 4567"
+    },
+    {
+      "id": 2,
+      "name": "Juan Panadero",
+      "email": "baker@pambazo.com",
+      "password": "$2b$10$g8lOFVQyDjHL9tkas2voke.wXPO2b/K3e8XhBgTv5w2cqJhki2zI6",
+      "role": "baker",
+      "phone": "+57 300 234 5678"
+    },
+    {
+      "id": 4,
+      "name": "María Propietaria",
+      "email": "owner@pambazo.com",
+      "password": "$2b$10$g8lOFVQyDjHL9tkas2voke.wXPO2b/K3e8XhBgTv5w2cqJhki2zI6",
+      "role": "owner",
+      "phone": "+57 300 456 7890"
+    },
+    {
+      "id": 5,
+      "name": "Ana Cocinera",
+      "email": "kitchen@pambazo.com",
+      "password": "$2b$10$g8lOFVQyDjHL9tkas2voke.wXPO2b/K3e8XhBgTv5w2cqJhki2zI6",
+      "role": "kitchen",
+      "phone": "+57 300 567 8901"
+    },
+    {
+      "id": 7,
+      "name": "Sofia Mesera",
+      "email": "waiter@pambazo.com",
+      "password": "$2b$10$g8lOFVQyDjHL9tkas2voke.wXPO2b/K3e8XhBgTv5w2cqJhki2zI6",
+      "role": "waiter",
+      "phone": "+57 300 789 0123"
+    },
+    {
+      "id": 9,
+      "name": "Roberto Cliente",
+      "email": "customer@pambazo.com",
+      "password": "$2b$10$g8lOFVQyDjHL9tkas2voke.wXPO2b/K3e8XhBgTv5w2cqJhki2zI6",
+      "role": "customer",
+      "phone": "+57 300 901 2345"
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "name": "Pan de Bono",
+      "description": "Delicioso pan de bono caliente",
+      "price": 2500,
+      "category": "Panadería",
+      "category_id": "1",
+      "is_available": true,
+      "available": true,
+      "created_at": "2024-01-24T10:00:00Z",
+      "updated_at": "2024-01-24T10:00:00Z"
+    },
+    {
+      "id": 2,
+      "name": "Buñuelo",
+      "description": "Buñuelo grande y crujiente",
+      "price": 2000,
+      "category": "Panadería",
+      "category_id": "1",
+      "is_available": true,
+      "available": true,
+      "created_at": "2024-01-24T10:00:00Z",
+      "updated_at": "2024-01-24T10:00:00Z"
+    },
+    {
+      "id": 3,
+      "name": "Empanada de Carne",
+      "description": "Empanada rellena de carne y papa",
+      "price": 3000,
+      "category": "Snacks",
+      "category_id": "2",
+      "is_available": true,
+      "available": true,
+      "created_at": "2024-01-24T10:00:00Z",
+      "updated_at": "2024-01-24T10:00:00Z"
+    }
+  ],
+  "tables": [
+    {
+      "id": 1,
+      "number": 1,
+      "capacity": 4,
+      "status": "available",
+      "currentOrder": null,
+      "is_available": false
+    },
+    {
+      "id": 2,
+      "number": 2,
+      "capacity": 4,
+      "status": "available",
+      "currentOrder": null,
+      "is_available": false
+    },
+    {
+      "id": 3,
+      "number": 3,
+      "capacity": 2,
+      "status": "available",
+      "currentOrder": null
+    },
+    {
+      "id": 4,
+      "number": 4,
+      "capacity": 2,
+      "status": "available",
+      "currentOrder": null
+    },
+    {
+      "id": 5,
+      "number": 5,
+      "capacity": 6,
+      "status": "available",
+      "currentOrder": null,
+      "is_available": false
+    },
+    {
+      "id": 6,
+      "number": 6,
+      "capacity": 4,
+      "status": "available",
+      "currentOrder": null
+    },
+    {
+      "id": 7,
+      "number": 7,
+      "capacity": 4,
+      "status": "available",
+      "currentOrder": null
+    },
+    {
+      "id": 8,
+      "number": 8,
+      "capacity": 2,
+      "status": "available",
+      "currentOrder": null
+    },
+    {
+      "id": 9,
+      "number": 9,
+      "capacity": 4,
+      "status": "available",
+      "currentOrder": null
+    },
+    {
+      "id": 10,
+      "number": 10,
+      "capacity": 8,
+      "status": "available",
+      "currentOrder": null
+    }
+  ],
+  "orders": [
+    {
+      "id": "order-1",
+      "tableNumber": 5,
+      "items": [
+        {
+          "id": "item-1",
+          "productId": 1,
+          "productName": "Pan de Bono",
+          "quantity": 3,
+          "notes": "Bien calientes"
+        },
+        {
+          "id": "item-2",
+          "productId": 3,
+          "productName": "Empanada de Carne",
+          "quantity": 2,
+          "notes": "Con ají aparte"
+        }
+      ],
+      "status": "completed",
+      "priority": "high",
+      "createdAt": "2024-01-24T19:30:00Z",
+      "startedAt": "2026-01-25T03:06:55.528Z",
+      "completedAt": "2026-01-25T03:06:58.316Z",
+      "prepTime": 0,
+      "estimatedTime": 15,
+      "updatedAt": "2026-01-25T05:20:35.468Z"
+    },
+    {
+      "id": "order-2",
+      "tableNumber": 2,
+      "items": [
+        {
+          "id": "item-3",
+          "productId": 2,
+          "productName": "Buñuelo",
+          "quantity": 5,
+          "notes": ""
+        }
+      ],
+      "status": "completed",
+      "priority": "medium",
+      "createdAt": "2024-01-24T19:45:00Z",
+      "startedAt": "2026-01-25T03:30:06.651Z",
+      "completedAt": "2026-01-25T03:45:12.531Z",
+      "prepTime": 15,
+      "estimatedTime": 10,
+      "updatedAt": "2026-01-25T05:20:36.833Z"
+    },
+    {
+      "id": "order-3",
+      "tableNumber": 8,
+      "items": [
+        {
+          "id": "item-4",
+          "productId": 1,
+          "productName": "Pan de Bono",
+          "quantity": 2,
+          "notes": ""
+        }
+      ],
+      "status": "served",
+      "priority": "low",
+      "createdAt": "2024-01-24T19:50:00Z",
+      "startedAt": "2024-01-24T19:55:00Z",
+      "completedAt": "2026-01-25T03:58:10.377Z",
+      "prepTime": 1053123,
+      "estimatedTime": 10,
+      "updatedAt": "2026-01-25T04:49:04.848Z"
+    },
+    {
+      "id": "order-1769314890351",
+      "tableNumber": 1,
+      "table_number": 1,
+      "items": [
+        {
+          "product_id": 1,
+          "product_name": "Pan de Bono",
+          "quantity": 1,
+          "price": 2500,
+          "id": "item-1769314890351-5yid"
+        }
+      ],
+      "notes": "",
+      "status": "completed",
+      "priority": "medium",
+      "createdBy": 7,
+      "createdAt": "2026-01-25T04:21:30.351Z",
+      "startedAt": "2026-01-25T04:33:35.032Z",
+      "completedAt": "2026-01-25T04:33:57.481Z",
+      "prepTime": 0,
+      "estimatedTime": 15,
+      "total": 2500,
+      "updatedAt": "2026-01-25T05:05:47.033Z"
+    },
+    {
+      "id": "order-1769315069596",
+      "tableNumber": 1,
+      "table_number": 1,
+      "items": [
+        {
+          "product_id": 2,
+          "product_name": "Buñuelo",
+          "quantity": 2,
+          "price": 2000,
+          "id": "item-1769315069596-65l4"
+        }
+      ],
+      "notes": "",
+      "status": "completed",
+      "priority": "medium",
+      "createdBy": 7,
+      "createdAt": "2026-01-25T04:24:29.596Z",
+      "startedAt": "2026-01-25T04:52:42.393Z",
+      "completedAt": "2026-01-25T04:56:28.232Z",
+      "prepTime": 4,
+      "estimatedTime": 15,
+      "total": 4000,
+      "updatedAt": "2026-01-25T05:08:30.698Z"
+    },
+    {
+      "id": "order-1769316751459",
+      "tableNumber": 1,
+      "table_number": 1,
+      "items": [
+        {
+          "product_id": 1,
+          "product_name": "Pan de Bono",
+          "productName": "Pan de Bono",
+          "quantity": 4,
+          "price": 2500,
+          "id": "item-1769316751459-kqqb"
+        }
+      ],
+      "notes": "",
+      "status": "completed",
+      "priority": "medium",
+      "createdBy": 7,
+      "createdAt": "2026-01-25T04:52:31.459Z",
+      "startedAt": "2026-01-25T04:52:56.913Z",
+      "completedAt": "2026-01-25T04:56:29.136Z",
+      "prepTime": 4,
+      "estimatedTime": 15,
+      "total": 10000,
+      "updatedAt": "2026-01-25T05:20:39.746Z"
+    },
+    {
+      "id": "order-1769317046396",
+      "tableNumber": 2,
+      "table_number": 2,
+      "items": [
+        {
+          "product_id": 1,
+          "product_name": "Pan de Bono",
+          "productName": "Pan de Bono",
+          "quantity": 1,
+          "price": 2500,
+          "id": "item-1769317046396-8dgf"
+        },
+        {
+          "product_id": 2,
+          "product_name": "Buñuelo",
+          "productName": "Buñuelo",
+          "quantity": 1,
+          "price": 2000,
+          "id": "item-1769317046396-jka2"
+        },
+        {
+          "product_id": 3,
+          "product_name": "Empanada de Carne",
+          "productName": "Empanada de Carne",
+          "quantity": 1,
+          "price": 3000,
+          "id": "item-1769317046396-q4aw"
+        }
+      ],
+      "notes": "",
+      "status": "completed",
+      "priority": "medium",
+      "createdBy": 7,
+      "createdAt": "2026-01-25T04:57:26.396Z",
+      "startedAt": "2026-01-25T04:57:48.666Z",
+      "completedAt": "2026-01-25T04:57:50.797Z",
+      "prepTime": 0,
+      "estimatedTime": 15,
+      "total": 7500,
+      "updatedAt": "2026-01-25T05:25:06.020Z"
+    },
+    {
+      "id": "order-1769317670004",
+      "tableNumber": 1,
+      "table_number": 1,
+      "items": [
+        {
+          "product_id": 1,
+          "product_name": "Pan de Bono",
+          "productName": "Pan de Bono",
+          "quantity": 4,
+          "price": 2500,
+          "id": "item-1769317670004-e46t"
+        },
+        {
+          "product_id": 2,
+          "product_name": "Buñuelo",
+          "productName": "Buñuelo",
+          "quantity": 1,
+          "price": 2000,
+          "id": "item-1769317670004-em5m"
+        }
+      ],
+      "notes": "",
+      "status": "completed",
+      "priority": "medium",
+      "createdBy": 7,
+      "createdAt": "2026-01-25T05:07:50.004Z",
+      "startedAt": "2026-01-25T05:14:28.428Z",
+      "completedAt": "2026-01-25T05:14:47.131Z",
+      "prepTime": 0,
+      "estimatedTime": 15,
+      "total": 12000,
+      "updatedAt": "2026-01-25T05:25:06.579Z"
+    },
+    {
+      "id": "order-1769318052636",
+      "tableNumber": 1,
+      "table_number": 1,
+      "items": [
+        {
+          "product_id": 2,
+          "product_name": "Buñuelo",
+          "productName": "Buñuelo",
+          "quantity": 4,
+          "price": 2000,
+          "id": "item-1769318052636-0934"
+        },
+        {
+          "product_id": 1,
+          "product_name": "Pan de Bono",
+          "productName": "Pan de Bono",
+          "quantity": 2,
+          "price": 2500,
+          "id": "item-1769318052636-jdna"
+        },
+        {
+          "product_id": 3,
+          "product_name": "Empanada de Carne",
+          "productName": "Empanada de Carne",
+          "quantity": 1,
+          "price": 3000,
+          "id": "item-1769318052636-0wsk"
+        }
+      ],
+      "notes": "",
+      "status": "served",
+      "priority": "medium",
+      "createdBy": 7,
+      "createdAt": "2026-01-25T05:14:12.636Z",
+      "startedAt": "2026-01-25T05:14:40.713Z",
+      "completedAt": "2026-01-25T05:14:45.725Z",
+      "prepTime": 0,
+      "estimatedTime": 15,
+      "total": 16000,
+      "updatedAt": "2026-01-25T05:15:12.072Z"
+    },
+    {
+      "id": "order-1769318153798",
+      "tableNumber": 5,
+      "table_number": 5,
+      "items": [
+        {
+          "product_id": 1,
+          "product_name": "Pan de Bono",
+          "productName": "Pan de Bono",
+          "quantity": 2,
+          "price": 2500,
+          "id": "item-1769318153798-9a2b"
+        },
+        {
+          "product_id": 2,
+          "product_name": "Buñuelo",
+          "productName": "Buñuelo",
+          "quantity": 2,
+          "price": 2000,
+          "id": "item-1769318153798-1pgq"
+        },
+        {
+          "product_id": 3,
+          "product_name": "Empanada de Carne",
+          "productName": "Empanada de Carne",
+          "quantity": 2,
+          "price": 3000,
+          "id": "item-1769318153798-w1w2"
+        }
+      ],
+      "notes": "",
+      "status": "served",
+      "priority": "medium",
+      "createdBy": 7,
+      "createdAt": "2026-01-25T05:15:53.798Z",
+      "startedAt": "2026-01-25T05:16:18.587Z",
+      "completedAt": "2026-01-25T05:16:23.813Z",
+      "prepTime": 0,
+      "estimatedTime": 15,
+      "total": 15000,
+      "updatedAt": "2026-01-25T05:21:54.323Z"
+    },
+    {
+      "id": "order-1769318416760",
+      "tableNumber": 2,
+      "table_number": 2,
+      "items": [
+        {
+          "product_id": 1,
+          "product_name": "Pan de Bono",
+          "productName": "Pan de Bono",
+          "quantity": 11,
+          "price": 2500,
+          "id": "item-1769318416760-6gd9"
+        }
+      ],
+      "notes": "",
+      "status": "served",
+      "priority": "medium",
+      "createdBy": 7,
+      "createdAt": "2026-01-25T05:20:16.760Z",
+      "startedAt": null,
+      "completedAt": null,
+      "prepTime": null,
+      "estimatedTime": 15,
+      "total": 27500,
+      "updatedAt": "2026-01-25T05:21:55.278Z"
+    },
+    {
+      "id": "order-1769318572797",
+      "tableNumber": 1,
+      "table_number": 1,
+      "items": [
+        {
+          "product_id": 2,
+          "product_name": "Buñuelo",
+          "productName": "Buñuelo",
+          "quantity": 9,
+          "price": 2000,
+          "id": "item-1769318572797-8k7c"
+        }
+      ],
+      "notes": "",
+      "status": "served",
+      "priority": "medium",
+      "createdBy": 7,
+      "createdAt": "2026-01-25T05:22:52.797Z",
+      "startedAt": "2026-01-25T05:23:18.157Z",
+      "completedAt": "2026-01-25T05:23:23.316Z",
+      "prepTime": 0,
+      "estimatedTime": 15,
+      "total": 18000,
+      "updatedAt": "2026-01-25T05:23:46.053Z"
+    },
+    {
+      "id": "order-1769319723741",
+      "tableNumber": null,
+      "table_number": null,
+      "items": [
+        {
+          "product_id": 1,
+          "quantity": 1,
+          "notes": "",
+          "id": "item-1769319723741-shgb"
+        },
+        {
+          "product_id": 2,
+          "quantity": 1,
+          "notes": "",
+          "id": "item-1769319723741-h9gm"
+        },
+        {
+          "product_id": 3,
+          "quantity": 1,
+          "notes": "",
+          "id": "item-1769319723741-wy03"
+        }
+      ],
+      "notes": "Pedido desde app cliente",
+      "status": "ready",
+      "priority": "medium",
+      "createdBy": 9,
+      "createdAt": "2026-01-25T05:42:03.741Z",
+      "startedAt": "2026-01-25T05:44:32.461Z",
+      "completedAt": "2026-01-25T05:44:35.638Z",
+      "prepTime": 0,
+      "estimatedTime": 15,
+      "total": null
+    },
+    {
+      "id": "order-1769319987905",
+      "tableNumber": null,
+      "table_number": null,
+      "items": [
+        {
+          "product_id": 1,
+          "quantity": 2,
+          "notes": "Test item",
+          "id": "item-1769319987905-0emc"
+        }
+      ],
+      "notes": "",
+      "status": "ready",
+      "priority": "medium",
+      "createdBy": 9,
+      "createdAt": "2026-01-25T05:46:27.905Z",
+      "startedAt": "2026-01-25T06:45:49.259Z",
+      "completedAt": "2026-01-25T06:45:59.285Z",
+      "prepTime": 0,
+      "estimatedTime": 15,
+      "total": null
+    },
+    {
+      "id": "order-1769320020608",
+      "tableNumber": null,
+      "table_number": null,
+      "items": [
+        {
+          "product_id": 1,
+          "quantity": 2,
+          "notes": "Test verification",
+          "id": "item-1769320020608-7oho"
+        }
+      ],
+      "notes": "",
+      "status": "ready",
+      "priority": "medium",
+      "createdBy": 9,
+      "createdAt": "2026-01-25T05:47:00.608Z",
+      "startedAt": "2026-01-25T06:45:51.904Z",
+      "completedAt": "2026-01-25T06:46:00.880Z",
+      "prepTime": 0,
+      "estimatedTime": 15,
+      "total": null
+    },
+    {
+      "id": "order-1769320050234",
+      "tableNumber": null,
+      "table_number": null,
+      "items": [
+        {
+          "product_id": 1,
+          "quantity": 2,
+          "notes": "Test verification",
+          "id": "item-1769320050234-7960"
+        }
+      ],
+      "notes": "",
+      "status": "ready",
+      "priority": "medium",
+      "createdBy": 9,
+      "createdAt": "2026-01-25T05:47:30.234Z",
+      "startedAt": "2026-01-25T06:45:50.130Z",
+      "completedAt": "2026-01-25T06:45:57.475Z",
+      "prepTime": 0,
+      "estimatedTime": 15,
+      "total": null
+    },
+    {
+      "id": "order-1769320175953",
+      "tableNumber": null,
+      "table_number": null,
+      "items": [
+        {
+          "product_id": 1,
+          "quantity": 2,
+          "notes": "Test verification",
+          "id": "item-1769320175953-5jvs"
+        }
+      ],
+      "notes": "",
+      "status": "ready",
+      "priority": "medium",
+      "createdBy": 9,
+      "createdAt": "2026-01-25T05:49:35.953Z",
+      "startedAt": "2026-01-25T06:45:50.589Z",
+      "completedAt": "2026-01-25T06:46:02.222Z",
+      "prepTime": 0,
+      "estimatedTime": 15,
+      "total": null
+    },
+    {
+      "id": "order-1769320271220",
+      "tableNumber": null,
+      "table_number": null,
+      "items": [
+        {
+          "product_id": 1,
+          "quantity": 2,
+          "notes": "Test verification",
+          "id": "item-1769320271220-x5p8"
+        }
+      ],
+      "notes": "",
+      "status": "ready",
+      "priority": "medium",
+      "createdBy": 9,
+      "createdAt": "2026-01-25T05:51:11.220Z",
+      "startedAt": "2026-01-25T06:45:50.950Z",
+      "completedAt": "2026-01-25T06:46:06.450Z",
+      "prepTime": 0,
+      "estimatedTime": 15,
+      "total": null
+    }
+  ],
+  "inventory": [],
+  "expenses": [],
+  "reservations": [],
+  "shifts": [
+    {
+      "id": 3,
+      "startTime": "2026-01-25T05:07:22.570Z",
+      "initialAmount": 0,
+      "finalAmount": 0,
+      "movements": [],
+      "salesTotal": 29500,
+      "status": "scheduled",
+      "createdAt": "2026-01-25T05:07:22.574Z"
+    }
+  ],
+  "payments": [],
+  "tips": [],
+  "notifications": [],
+  "favorites": {},
+  "carts": {},
+  "loyaltyPoints": {
+    "9": {
+      "points": 0,
+      "level": "Bronze",
+      "history": []
+    },
+    "NaN": {
+      "points": 0,
+      "level": "Bronze",
+      "history": []
+    }
+  },
+  "pushSubscriptions": [],
+  "kitchenStats": {
+    "date": "2024-01-24",
+    "pendingOrders": 1,
+    "inPreparation": 0,
+    "completedToday": 22,
+    "avgPrepTime": 4
+  },
+  "kitchenOrders": [
+    {
+      "id": "order-1",
+      "tableNumber": 5,
+      "items": [
+        {
+          "id": "item-1",
+          "productId": 1,
+          "productName": "Pan de Bono",
+          "quantity": 3,
+          "notes": "Bien calientes"
+        },
+        {
+          "id": "item-2",
+          "productId": 3,
+          "productName": "Empanada de Carne",
+          "quantity": 2,
+          "notes": "Con ají aparte"
+        }
+      ],
+      "status": "completed",
+      "priority": "high",
+      "createdAt": "2024-01-24T19:30:00Z",
+      "startedAt": "2026-01-25T03:06:55.528Z",
+      "completedAt": "2026-01-25T03:06:58.316Z",
+      "prepTime": 0,
+      "estimatedTime": 15,
+      "updatedAt": "2026-01-25T05:20:35.468Z"
+    },
+    {
+      "id": "order-2",
+      "tableNumber": 2,
+      "items": [
+        {
+          "id": "item-3",
+          "productId": 2,
+          "productName": "Buñuelo",
+          "quantity": 5,
+          "notes": ""
+        }
+      ],
+      "status": "completed",
+      "priority": "medium",
+      "createdAt": "2024-01-24T19:45:00Z",
+      "startedAt": "2026-01-25T03:30:06.651Z",
+      "completedAt": "2026-01-25T03:45:12.531Z",
+      "prepTime": 15,
+      "estimatedTime": 10,
+      "updatedAt": "2026-01-25T05:20:36.833Z"
+    },
+    {
+      "id": "order-3",
+      "tableNumber": 8,
+      "items": [
+        {
+          "id": "item-4",
+          "productId": 1,
+          "productName": "Pan de Bono",
+          "quantity": 2,
+          "notes": ""
+        }
+      ],
+      "status": "served",
+      "priority": "low",
+      "createdAt": "2024-01-24T19:50:00Z",
+      "startedAt": "2024-01-24T19:55:00Z",
+      "completedAt": "2026-01-25T03:58:10.377Z",
+      "prepTime": 1053123,
+      "estimatedTime": 10,
+      "updatedAt": "2026-01-25T04:49:04.848Z"
+    },
+    {
+      "id": "order-1769314890351",
+      "tableNumber": 1,
+      "table_number": 1,
+      "items": [
+        {
+          "product_id": 1,
+          "product_name": "Pan de Bono",
+          "quantity": 1,
+          "price": 2500,
+          "id": "item-1769314890351-5yid"
+        }
+      ],
+      "notes": "",
+      "status": "completed",
+      "priority": "medium",
+      "createdBy": 7,
+      "createdAt": "2026-01-25T04:21:30.351Z",
+      "startedAt": "2026-01-25T04:33:35.032Z",
+      "completedAt": "2026-01-25T04:33:57.481Z",
+      "prepTime": 0,
+      "estimatedTime": 15,
+      "total": 2500,
+      "updatedAt": "2026-01-25T05:05:47.033Z"
+    },
+    {
+      "id": "order-1769315069596",
+      "tableNumber": 1,
+      "table_number": 1,
+      "items": [
+        {
+          "product_id": 2,
+          "product_name": "Buñuelo",
+          "quantity": 2,
+          "price": 2000,
+          "id": "item-1769315069596-65l4"
+        }
+      ],
+      "notes": "",
+      "status": "completed",
+      "priority": "medium",
+      "createdBy": 7,
+      "createdAt": "2026-01-25T04:24:29.596Z",
+      "startedAt": "2026-01-25T04:52:42.393Z",
+      "completedAt": "2026-01-25T04:56:28.232Z",
+      "prepTime": 4,
+      "estimatedTime": 15,
+      "total": 4000,
+      "updatedAt": "2026-01-25T05:08:30.698Z"
+    },
+    {
+      "id": "order-1769316751459",
+      "tableNumber": 1,
+      "table_number": 1,
+      "items": [
+        {
+          "product_id": 1,
+          "product_name": "Pan de Bono",
+          "productName": "Pan de Bono",
+          "quantity": 4,
+          "price": 2500,
+          "id": "item-1769316751459-kqqb"
+        }
+      ],
+      "notes": "",
+      "status": "completed",
+      "priority": "medium",
+      "createdBy": 7,
+      "createdAt": "2026-01-25T04:52:31.459Z",
+      "startedAt": "2026-01-25T04:52:56.913Z",
+      "completedAt": "2026-01-25T04:56:29.136Z",
+      "prepTime": 4,
+      "estimatedTime": 15,
+      "total": 10000,
+      "updatedAt": "2026-01-25T05:20:39.746Z"
+    },
+    {
+      "id": "order-1769317046396",
+      "tableNumber": 2,
+      "table_number": 2,
+      "items": [
+        {
+          "product_id": 1,
+          "product_name": "Pan de Bono",
+          "productName": "Pan de Bono",
+          "quantity": 1,
+          "price": 2500,
+          "id": "item-1769317046396-8dgf"
+        },
+        {
+          "product_id": 2,
+          "product_name": "Buñuelo",
+          "productName": "Buñuelo",
+          "quantity": 1,
+          "price": 2000,
+          "id": "item-1769317046396-jka2"
+        },
+        {
+          "product_id": 3,
+          "product_name": "Empanada de Carne",
+          "productName": "Empanada de Carne",
+          "quantity": 1,
+          "price": 3000,
+          "id": "item-1769317046396-q4aw"
+        }
+      ],
+      "notes": "",
+      "status": "completed",
+      "priority": "medium",
+      "createdBy": 7,
+      "createdAt": "2026-01-25T04:57:26.396Z",
+      "startedAt": "2026-01-25T04:57:48.666Z",
+      "completedAt": "2026-01-25T04:57:50.797Z",
+      "prepTime": 0,
+      "estimatedTime": 15,
+      "total": 7500,
+      "updatedAt": "2026-01-25T05:25:06.020Z"
+    },
+    {
+      "id": "order-1769317670004",
+      "tableNumber": 1,
+      "table_number": 1,
+      "items": [
+        {
+          "product_id": 1,
+          "product_name": "Pan de Bono",
+          "productName": "Pan de Bono",
+          "quantity": 4,
+          "price": 2500,
+          "id": "item-1769317670004-e46t"
+        },
+        {
+          "product_id": 2,
+          "product_name": "Buñuelo",
+          "productName": "Buñuelo",
+          "quantity": 1,
+          "price": 2000,
+          "id": "item-1769317670004-em5m"
+        }
+      ],
+      "notes": "",
+      "status": "completed",
+      "priority": "medium",
+      "createdBy": 7,
+      "createdAt": "2026-01-25T05:07:50.004Z",
+      "startedAt": "2026-01-25T05:14:28.428Z",
+      "completedAt": "2026-01-25T05:14:47.131Z",
+      "prepTime": 0,
+      "estimatedTime": 15,
+      "total": 12000,
+      "updatedAt": "2026-01-25T05:25:06.579Z"
+    },
+    {
+      "id": "order-1769318052636",
+      "tableNumber": 1,
+      "table_number": 1,
+      "items": [
+        {
+          "product_id": 2,
+          "product_name": "Buñuelo",
+          "productName": "Buñuelo",
+          "quantity": 4,
+          "price": 2000,
+          "id": "item-1769318052636-0934"
+        },
+        {
+          "product_id": 1,
+          "product_name": "Pan de Bono",
+          "productName": "Pan de Bono",
+          "quantity": 2,
+          "price": 2500,
+          "id": "item-1769318052636-jdna"
+        },
+        {
+          "product_id": 3,
+          "product_name": "Empanada de Carne",
+          "productName": "Empanada de Carne",
+          "quantity": 1,
+          "price": 3000,
+          "id": "item-1769318052636-0wsk"
+        }
+      ],
+      "notes": "",
+      "status": "served",
+      "priority": "medium",
+      "createdBy": 7,
+      "createdAt": "2026-01-25T05:14:12.636Z",
+      "startedAt": "2026-01-25T05:14:40.713Z",
+      "completedAt": "2026-01-25T05:14:45.725Z",
+      "prepTime": 0,
+      "estimatedTime": 15,
+      "total": 16000,
+      "updatedAt": "2026-01-25T05:15:12.072Z"
+    },
+    {
+      "id": "order-1769318153798",
+      "tableNumber": 5,
+      "table_number": 5,
+      "items": [
+        {
+          "product_id": 1,
+          "product_name": "Pan de Bono",
+          "productName": "Pan de Bono",
+          "quantity": 2,
+          "price": 2500,
+          "id": "item-1769318153798-9a2b"
+        },
+        {
+          "product_id": 2,
+          "product_name": "Buñuelo",
+          "productName": "Buñuelo",
+          "quantity": 2,
+          "price": 2000,
+          "id": "item-1769318153798-1pgq"
+        },
+        {
+          "product_id": 3,
+          "product_name": "Empanada de Carne",
+          "productName": "Empanada de Carne",
+          "quantity": 2,
+          "price": 3000,
+          "id": "item-1769318153798-w1w2"
+        }
+      ],
+      "notes": "",
+      "status": "served",
+      "priority": "medium",
+      "createdBy": 7,
+      "createdAt": "2026-01-25T05:15:53.798Z",
+      "startedAt": "2026-01-25T05:16:18.587Z",
+      "completedAt": "2026-01-25T05:16:23.813Z",
+      "prepTime": 0,
+      "estimatedTime": 15,
+      "total": 15000,
+      "updatedAt": "2026-01-25T05:21:54.323Z"
+    },
+    {
+      "id": "order-1769318416760",
+      "tableNumber": 2,
+      "table_number": 2,
+      "items": [
+        {
+          "product_id": 1,
+          "product_name": "Pan de Bono",
+          "productName": "Pan de Bono",
+          "quantity": 11,
+          "price": 2500,
+          "id": "item-1769318416760-6gd9"
+        }
+      ],
+      "notes": "",
+      "status": "served",
+      "priority": "medium",
+      "createdBy": 7,
+      "createdAt": "2026-01-25T05:20:16.760Z",
+      "startedAt": null,
+      "completedAt": null,
+      "prepTime": null,
+      "estimatedTime": 15,
+      "total": 27500,
+      "updatedAt": "2026-01-25T05:21:55.278Z"
+    },
+    {
+      "id": "order-1769318572797",
+      "tableNumber": 1,
+      "table_number": 1,
+      "items": [
+        {
+          "product_id": 2,
+          "product_name": "Buñuelo",
+          "productName": "Buñuelo",
+          "quantity": 9,
+          "price": 2000,
+          "id": "item-1769318572797-8k7c"
+        }
+      ],
+      "notes": "",
+      "status": "served",
+      "priority": "medium",
+      "createdBy": 7,
+      "createdAt": "2026-01-25T05:22:52.797Z",
+      "startedAt": "2026-01-25T05:23:18.157Z",
+      "completedAt": "2026-01-25T05:23:23.316Z",
+      "prepTime": 0,
+      "estimatedTime": 15,
+      "total": 18000,
+      "updatedAt": "2026-01-25T05:23:46.053Z"
+    },
+    {
+      "id": "order-1769319723741",
+      "tableNumber": null,
+      "table_number": null,
+      "items": [
+        {
+          "product_id": 1,
+          "quantity": 1,
+          "notes": "",
+          "id": "item-1769319723741-shgb"
+        },
+        {
+          "product_id": 2,
+          "quantity": 1,
+          "notes": "",
+          "id": "item-1769319723741-h9gm"
+        },
+        {
+          "product_id": 3,
+          "quantity": 1,
+          "notes": "",
+          "id": "item-1769319723741-wy03"
+        }
+      ],
+      "notes": "Pedido desde app cliente",
+      "status": "ready",
+      "priority": "medium",
+      "createdBy": 9,
+      "createdAt": "2026-01-25T05:42:03.741Z",
+      "startedAt": "2026-01-25T05:44:32.461Z",
+      "completedAt": "2026-01-25T05:44:35.638Z",
+      "prepTime": 0,
+      "estimatedTime": 15,
+      "total": null
+    },
+    {
+      "id": "order-1769319987905",
+      "tableNumber": null,
+      "table_number": null,
+      "items": [
+        {
+          "product_id": 1,
+          "quantity": 2,
+          "notes": "Test item",
+          "id": "item-1769319987905-0emc"
+        }
+      ],
+      "notes": "",
+      "status": "ready",
+      "priority": "medium",
+      "createdBy": 9,
+      "createdAt": "2026-01-25T05:46:27.905Z",
+      "startedAt": "2026-01-25T06:45:49.259Z",
+      "completedAt": "2026-01-25T06:45:59.285Z",
+      "prepTime": 0,
+      "estimatedTime": 15,
+      "total": null
+    },
+    {
+      "id": "order-1769320020608",
+      "tableNumber": null,
+      "table_number": null,
+      "items": [
+        {
+          "product_id": 1,
+          "quantity": 2,
+          "notes": "Test verification",
+          "id": "item-1769320020608-7oho"
+        }
+      ],
+      "notes": "",
+      "status": "ready",
+      "priority": "medium",
+      "createdBy": 9,
+      "createdAt": "2026-01-25T05:47:00.608Z",
+      "startedAt": "2026-01-25T06:45:51.904Z",
+      "completedAt": "2026-01-25T06:46:00.880Z",
+      "prepTime": 0,
+      "estimatedTime": 15,
+      "total": null
+    },
+    {
+      "id": "order-1769320050234",
+      "tableNumber": null,
+      "table_number": null,
+      "items": [
+        {
+          "product_id": 1,
+          "quantity": 2,
+          "notes": "Test verification",
+          "id": "item-1769320050234-7960"
+        }
+      ],
+      "notes": "",
+      "status": "ready",
+      "priority": "medium",
+      "createdBy": 9,
+      "createdAt": "2026-01-25T05:47:30.234Z",
+      "startedAt": "2026-01-25T06:45:50.130Z",
+      "completedAt": "2026-01-25T06:45:57.475Z",
+      "prepTime": 0,
+      "estimatedTime": 15,
+      "total": null
+    },
+    {
+      "id": "order-1769320175953",
+      "tableNumber": null,
+      "table_number": null,
+      "items": [
+        {
+          "product_id": 1,
+          "quantity": 2,
+          "notes": "Test verification",
+          "id": "item-1769320175953-5jvs"
+        }
+      ],
+      "notes": "",
+      "status": "ready",
+      "priority": "medium",
+      "createdBy": 9,
+      "createdAt": "2026-01-25T05:49:35.953Z",
+      "startedAt": "2026-01-25T06:45:50.589Z",
+      "completedAt": "2026-01-25T06:46:02.222Z",
+      "prepTime": 0,
+      "estimatedTime": 15,
+      "total": null
+    },
+    {
+      "id": "order-1769320271220",
+      "tableNumber": null,
+      "table_number": null,
+      "items": [
+        {
+          "product_id": 1,
+          "quantity": 2,
+          "notes": "Test verification",
+          "id": "item-1769320271220-x5p8"
+        }
+      ],
+      "notes": "",
+      "status": "ready",
+      "priority": "medium",
+      "createdBy": 9,
+      "createdAt": "2026-01-25T05:51:11.220Z",
+      "startedAt": "2026-01-25T06:45:50.950Z",
+      "completedAt": "2026-01-25T06:46:06.450Z",
+      "prepTime": 0,
+      "estimatedTime": 15,
+      "total": null
+    }
+  ]
+}

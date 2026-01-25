@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { useStore } from '../../store/useStore';
+import { useStore } from '../store/useStore';
 import ProductionFlowIndicator from './ProductionFlowIndicator';
 import { Calendar, Filter, Search, Download, Eye } from 'lucide-react';
 import { PAMBAZO, FinishedProduct, ProductSaleRecord } from '../../shared/types';

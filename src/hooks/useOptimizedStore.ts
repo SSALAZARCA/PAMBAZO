@@ -2,9 +2,9 @@
 // Capa de optimización que envuelve el store existente sin modificarlo
 
 import { useMemo, useCallback, useEffect, useRef } from 'react';
-import { useStore } from '../../store/useStore';
-import { DataSyncOptimizer, ROLE_PERMISSIONS, memoizeByRole } from '../../store/syncOptimizer';
-import type { Notification, Order, InventoryEntry, Table, UserRole } from '../../shared/types';
+import { useStore } from '../store/useStore';
+import { DataSyncOptimizer, ROLE_PERMISSIONS, memoizeByRole } from '../store/syncOptimizer';
+import type { Notification, Order, InventoryEntry, Table, UserRole } from '../shared/types';
 
 // Tipos para el hook optimizado
 // Removed local UserRole definition
@@ -138,7 +138,7 @@ export const useOptimizedStore = (options: OptimizedStoreOptions) => {
 
       getUnreadCount: useCallback(() => {
         const filteredNotifications = memoizedGetters.getFilteredNotifications(originalStore.notifications);
-        return filteredNotifications.filter(n => !n.read).length;
+        return filteredNotifications.filter((n: Notification) => !n.read).length;
       }, [originalStore.notifications, memoizedGetters])
     };
   }, [userRole, optimizer, originalStore, memoizedGetters]);

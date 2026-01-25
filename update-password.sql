@@ -1,0 +1,1 @@
+UPDATE users SET password_hash = '$2b$12$lmZ0/kOWu0t/KtcwmBSZ1ONLmrWznyxxWKwDP.yu5bwTQ9FVt3b8a' WHERE email = 'owner@pambazo.com';

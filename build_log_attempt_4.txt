@@ -1,0 +1,6 @@
+﻿
+> pambazo-bakery-management@1.0.0 build
+> tsc && vite build
+
+components/InventoryManagement.tsx(406,4): error TS1005: ',' expected.
+components/InventoryManagement.tsx(1028,1): error TS1128: Declaration or statement expected.

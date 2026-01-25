@@ -1,0 +1,6 @@
+﻿
+> pambazo-bakery-management@1.0.0 build
+> tsc && vite build
+
+src/pages/baker/schedule/BakerSchedulePage.tsx(295,57): error TS2322: Type '{ shiftId: string; currentDate: Date; onRequestSubmitted: () => void; }' is not assignable to type 'IntrinsicAttributes & ShiftChangeRequestDialogProps'.
+  Property 'shiftId' does not exist on type 'IntrinsicAttributes & ShiftChangeRequestDialogProps'.

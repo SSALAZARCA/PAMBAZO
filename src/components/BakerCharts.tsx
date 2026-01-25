@@ -16,7 +16,7 @@ import {
   Legend,
   ResponsiveContainer
 } from 'recharts';
-import { useStore } from '../../store/useStore';
+import { useStore } from '../store/useStore';
 import { BakerKPI, MaterialUsage } from '../../shared/types';
 import {
   BarChart3,

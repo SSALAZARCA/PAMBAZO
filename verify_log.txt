@@ -1,0 +1,13 @@
+--- START VERIFICATION ---
+1. Logging in...
+   Login successful. User ID: 9
+2. Fetching products...
+   Found 3 products.
+   Sample Product [0]: ID=1 Name="Pan de Bono" Price=2500 (Type: number)
+3. Creating test order...
+   Order created: true
+   Order ID: order-1769320271220
+   Order Total: null
+   CRITICAL: ORDER TOTAL IS NULL!
+4. Fetching order history...
+CRITICAL ERROR: Cannot read properties of undefined (reading 'length')

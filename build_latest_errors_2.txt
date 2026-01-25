@@ -1,0 +1,37 @@
+﻿
+> pambazo-bakery-management@1.0.0 build
+> tsc && vite build
+
+src/components/CreateBatchDialog.tsx(115,9): error TS2322: Type '{ materialId?: string; quantity?: number; }' is not assignable to type '{ materialId: string; quantity: number; }'.
+  Property 'materialId' is optional in type '{ materialId?: string; quantity?: number; }' but required in type '{ materialId: string; quantity: number; }'.
+src/components/LoginPage.tsx(1,1): error TS6133: 'React' is declared but its value is never read.
+src/components/mobile/MobileLoginPage.tsx(1,1): error TS6133: 'React' is declared but its value is never read.
+src/components/RecentOrderToast.tsx(1,8): error TS6133: 'React' is declared but its value is never read.
+src/components/shifts/AttendanceButton.tsx(14,5): error TS6133: 'shiftId' is declared but its value is never read.
+src/components/shifts/ShiftChangeRequestDialog.tsx(24,5): error TS6133: 'shiftId' is declared but its value is never read.
+src/components/ui/notifications.tsx(5,1): error TS6133: 'toast' is declared but its value is never read.
+src/pages/admin/finance/FinancePage.tsx(148,32): error TS7030: Not all code paths return a value.
+src/pages/admin/finance/FinancePage.tsx(188,31): error TS7030: Not all code paths return a value.
+src/pages/admin/finance/FinancePage.tsx(221,32): error TS7030: Not all code paths return a value.
+src/pages/admin/inventory/InventoryPage.tsx(9,94): error TS6133: 'Save' is declared but its value is never read.
+src/pages/admin/inventory/InventoryPage.tsx(10,60): error TS6133: 'DialogTrigger' is declared but its value is never read.
+src/pages/admin/orders/OrdersPage.tsx(4,29): error TS6133: 'CardHeader' is declared but its value is never read.
+src/pages/admin/orders/OrdersPage.tsx(4,41): error TS6133: 'CardTitle' is declared but its value is never read.
+src/pages/admin/orders/OrdersPage.tsx(8,10): error TS6133: 'ShoppingCart' is declared but its value is never read.
+src/pages/admin/orders/OrdersPage.tsx(8,32): error TS6133: 'Filter' is declared but its value is never read.
+src/pages/admin/orders/OrdersPage.tsx(8,40): error TS6133: 'Eye' is declared but its value is never read.
+src/pages/admin/orders/OrdersPage.tsx(8,45): error TS6133: 'XCircle' is declared but its value is never read.
+src/pages/admin/orders/OrdersPage.tsx(8,54): error TS6133: 'Clock' is declared but its value is never read.
+src/pages/admin/orders/OrdersPage.tsx(8,61): error TS6133: 'CheckCircle' is declared but its value is never read.
+src/pages/admin/orders/OrdersPage.tsx(8,74): error TS6133: 'ChefHat' is declared but its value is never read.
+src/pages/admin/orders/OrdersPage.tsx(102,59): error TS4111: Property 'pending' comes from an index signature, so it must be accessed with ['pending'].
+src/pages/admin/products/ProductsPage.tsx(3,16): error TS6133: 'Product' is declared but its value is never read.
+src/pages/admin/products/ProductsPage.tsx(8,50): error TS6133: 'Save' is declared but its value is never read.
+src/pages/admin/products/ProductsPage.tsx(11,1): error TS6133: 'Textarea' is declared but its value is never read.
+src/pages/admin/tables/TablesPage.tsx(1,8): error TS6133: 'React' is declared but its value is never read.
+src/pages/admin/tables/TablesPage.tsx(13,5): error TS6133: 'Coffee' is declared but its value is never read.
+src/pages/admin/tables/TablesPage.tsx(14,5): error TS6133: 'Clock' is declared but its value is never read.
+src/pages/admin/tables/TablesPage.tsx(15,13): error TS6133: 'UserIcon' is declared but its value is never read.
+src/pages/admin/tables/TablesPage.tsx(19,5): error TS6133: 'X' is declared but its value is never read.
+src/pages/BakerDashboard.tsx(73,5): error TS6133: 'resetAllOvens' is declared but its value is never read.
+src/pages/LandingPage.tsx(16,1): error TS6192: All imports in import declaration are unused.

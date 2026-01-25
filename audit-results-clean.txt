@@ -1,0 +1,58 @@
+﻿
+========================================
+AUDITOR├ìA BACKEND - DASHBOARD PANADERO
+========================================
+
+[1] HEALTH CHECK
+Ô£à Health Check: OK (200)
+
+[2] AUTENTICACI├ôN
+Ô£à Login Baker: OK (200)
+   Token obtenido correctamente
+
+[3] INVENTARIO
+Ô£à Obtener Inventario: OK (200)
+   ­ƒôª 6 items en inventario
+
+[4] PRODUCCI├ôN - LOTES
+Ô£à Obtener Lotes de Producci├│n: OK (200)
+   ­ƒöÑ 1 lotes de producci├│n
+
+[5] DEDUCCI├ôN DE MATERIALES
+Ô£à Deducir Materiales: OK (200)
+
+[6] PRODUCTO TERMINADO
+Ô£à Agregar Producto Terminado: OK (200)
+
+[7] ├ôRDENES
+Ô£à Obtener ├ôrdenes: OK (200)
+   ­ƒôï 0 ├│rdenes
+
+[8] PRODUCTOS
+Ô£à Obtener Productos: OK (200)
+   ­ƒÑû 6 productos
+
+[9] USUARIOS
+ÔØî Obtener Usuarios: FAIL (403)
+
+[10] BASE DE DATOS
+Ô£à db.json existe
+   - users: 11 items
+   - products: 6 items
+   - inventory: 6 items
+   - orders: 0 items
+   - productionBatches: 0 items
+
+========================================
+RESUMEN DE AUDITOR├ìA
+========================================
+
+Total de pruebas: 9
+Ô£à Exitosas: 8
+ÔØî Fallidas: 1
+
+­ƒôè Porcentaje de ├®xito: 88.89%
+­ƒÄë Estado: EXCELENTE
+
+========================================
+

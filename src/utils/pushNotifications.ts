@@ -3,7 +3,7 @@
  * Handles subscription and notification management
  */
 
-const VAPID_PUBLIC_KEY = 'BEl62iUYgUivxIkv69yViEuiBIa-Ib9-SkvMeAtA3LFgDzkrxZJjSgSnfckjBJuBkr3qBr5v-RQZZ7nSLdQJCQI';
+const VAPID_PUBLIC_KEY = import.meta.env['VITE_VAPID_PUBLIC_KEY'] || '';
 
 export class PushNotificationManager {
     private registration: ServiceWorkerRegistration | null = null;
@@ -43,7 +43,7 @@ export class PushNotificationManager {
         try {
             const subscription = await this.registration.pushManager.subscribe({
                 userVisibleOnly: true,
-                applicationServerKey: this.urlBase64ToUint8Array(VAPID_PUBLIC_KEY)
+                applicationServerKey: this.urlBase64ToUint8Array(VAPID_PUBLIC_KEY) as unknown as BufferSource
             });
 
             // Send subscription to backend
@@ -87,7 +87,12 @@ export class PushNotificationManager {
     private async sendSubscriptionToServer(subscription: PushSubscription) {
         const token = localStorage.getItem('token');
 
-        await fetch(`${import.meta.env.VITE_API_URL}/api/v1/notifications/subscribe`, {
+        // Fix: Ensure we don't duplicate /api if it's already in the ENV
+        const baseUrl = import.meta.env['VITE_API_URL'].endsWith('/api')
+            ? import.meta.env['VITE_API_URL']
+            : `${import.meta.env['VITE_API_URL']}/api`;
+
+        await fetch(`${baseUrl}/v1/notifications/subscribe`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -100,7 +105,12 @@ export class PushNotificationManager {
     private async removeSubscriptionFromServer(subscription: PushSubscription) {
         const token = localStorage.getItem('token');
 
-        await fetch(`${import.meta.env.VITE_API_URL}/api/v1/notifications/unsubscribe`, {
+        // Fix: Ensure we don't duplicate /api if it's already in the ENV
+        const baseUrl = import.meta.env['VITE_API_URL'].endsWith('/api')
+            ? import.meta.env['VITE_API_URL']
+            : `${import.meta.env['VITE_API_URL']}/api`;
+
+        await fetch(`${baseUrl}/v1/notifications/unsubscribe`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -1,0 +1,591 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Carlos Administrador",
+      "email": "admin@pambazo.com",
+      "password": "$2b$10$g8lOFVQyDjHL9tkas2voke.wXPO2b/K3e8XhBgTv5w2cqJhki2zI6",
+      "role": "admin",
+      "phone": "+57 300 123 4567"
+    },
+    {
+      "id": 2,
+      "name": "Juan Panadero",
+      "email": "baker@pambazo.com",
+      "password": "$2b$10$g8lOFVQyDjHL9tkas2voke.wXPO2b/K3e8XhBgTv5w2cqJhki2zI6",
+      "role": "baker",
+      "phone": "+57 300 234 5678"
+    },
+    {
+      "id": 3,
+      "name": "Pedro Hornero",
+      "email": "baker2@pambazo.com",
+      "password": "$2b$10$g8lOFVQyDjHL9tkas2voke.wXPO2b/K3e8XhBgTv5w2cqJhki2zI6",
+      "role": "baker",
+      "phone": "+57 300 345 6789"
+    },
+    {
+      "id": 4,
+      "name": "María Propietaria",
+      "email": "owner@pambazo.com",
+      "password": "$2b$10$g8lOFVQyDjHL9tkas2voke.wXPO2b/K3e8XhBgTv5w2cqJhki2zI6",
+      "role": "owner",
+      "phone": "+57 300 456 7890"
+    },
+    {
+      "id": 5,
+      "name": "Ana Cocinera",
+      "email": "kitchen@pambazo.com",
+      "password": "$2b$10$g8lOFVQyDjHL9tkas2voke.wXPO2b/K3e8XhBgTv5w2cqJhki2zI6",
+      "role": "kitchen",
+      "phone": "+57 300 567 8901"
+    },
+    {
+      "id": 6,
+      "name": "Luis Ayudante",
+      "email": "kitchen2@pambazo.com",
+      "password": "$2b$10$g8lOFVQyDjHL9tkas2voke.wXPO2b/K3e8XhBgTv5w2cqJhki2zI6",
+      "role": "kitchen",
+      "phone": "+57 300 678 9012"
+    },
+    {
+      "id": 7,
+      "name": "Sofia Mesera",
+      "email": "waiter@pambazo.com",
+      "password": "$2b$10$g8lOFVQyDjHL9tkas2voke.wXPO2b/K3e8XhBgTv5w2cqJhki2zI6",
+      "role": "waiter",
+      "phone": "+57 300 789 0123"
+    },
+    {
+      "id": 8,
+      "name": "Diego Camarero",
+      "email": "waiter2@pambazo.com",
+      "password": "$2b$10$g8lOFVQyDjHL9tkas2voke.wXPO2b/K3e8XhBgTv5w2cqJhki2zI6",
+      "role": "waiter",
+      "phone": "+57 300 890 1234"
+    },
+    {
+      "id": 9,
+      "name": "Roberto Cliente",
+      "email": "customer@pambazo.com",
+      "password": "$2b$10$g8lOFVQyDjHL9tkas2voke.wXPO2b/K3e8XhBgTv5w2cqJhki2zI6",
+      "role": "customer",
+      "phone": "+57 300 901 2345"
+    },
+    {
+      "id": 10,
+      "name": "Laura Compradora",
+      "email": "customer2@pambazo.com",
+      "password": "$2b$10$g8lOFVQyDjHL9tkas2voke.wXPO2b/K3e8XhBgTv5w2cqJhki2zI6",
+      "role": "customer",
+      "phone": "+57 300 012 3456"
+    },
+    {
+      "id": 11,
+      "name": "Miguel Nuevo",
+      "email": "customer3@pambazo.com",
+      "password": "$2b$10$g8lOFVQyDjHL9tkas2voke.wXPO2b/K3e8XhBgTv5w2cqJhki2zI6",
+      "role": "customer",
+      "phone": "+57 300 123 4567"
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "name": "Croissant Artesanal",
+      "description": "Croissant de mantequilla francesa",
+      "price": 12000,
+      "category": "Panadería",
+      "image": "/images/croissant.jpg",
+      "available": true,
+      "rating": 4.8,
+      "stock": 50
+    },
+    {
+      "id": 2,
+      "name": "Pan de Masa Madre",
+      "description": "Pan artesanal de fermentación larga",
+      "price": 15000,
+      "category": "Panadería",
+      "image": "/images/masa-madre.jpg",
+      "available": true,
+      "rating": 4.9,
+      "stock": 30
+    },
+    {
+      "id": 3,
+      "name": "Baguette Francesa",
+      "description": "Baguette tradicional crujiente",
+      "price": 8000,
+      "category": "Panadería",
+      "image": "/images/baguette.jpg",
+      "available": true,
+      "rating": 4.7,
+      "stock": 40
+    },
+    {
+      "id": 4,
+      "name": "Roles de Canela",
+      "description": "Roles dulces con canela y glaseado",
+      "price": 10000,
+      "category": "Repostería",
+      "image": "/images/roles.jpg",
+      "available": true,
+      "rating": 4.6,
+      "stock": 25
+    },
+    {
+      "id": 5,
+      "name": "Galletas de Chocolate",
+      "description": "Galletas con chips de chocolate",
+      "price": 6000,
+      "category": "Repostería",
+      "image": "/images/galletas.jpg",
+      "available": true,
+      "rating": 4.5,
+      "stock": 60
+    },
+    {
+      "id": 6,
+      "name": "Pastel de Chocolate",
+      "description": "Pastel de chocolate con ganache",
+      "price": 45000,
+      "category": "Repostería",
+      "image": "/images/pastel.jpg",
+      "available": true,
+      "rating": 5,
+      "stock": 10
+    }
+  ],
+  "tables": [
+    {
+      "id": 1,
+      "number": 1,
+      "capacity": 4,
+      "status": "available",
+      "currentOrder": null
+    },
+    {
+      "id": 2,
+      "number": 2,
+      "capacity": 4,
+      "status": "available",
+      "currentOrder": null
+    },
+    {
+      "id": 3,
+      "number": 3,
+      "capacity": 4,
+      "status": "available",
+      "currentOrder": null
+    },
+    {
+      "id": 4,
+      "number": 4,
+      "capacity": 4,
+      "status": "available",
+      "currentOrder": null
+    },
+    {
+      "id": 5,
+      "number": 5,
+      "capacity": 4,
+      "status": "available",
+      "currentOrder": null
+    },
+    {
+      "id": 6,
+      "number": 6,
+      "capacity": 4,
+      "status": "available",
+      "currentOrder": null
+    },
+    {
+      "id": 7,
+      "number": 7,
+      "capacity": 4,
+      "status": "available",
+      "currentOrder": null
+    },
+    {
+      "id": 8,
+      "number": 8,
+      "capacity": 4,
+      "status": "available",
+      "currentOrder": null
+    },
+    {
+      "id": 9,
+      "number": 9,
+      "capacity": 4,
+      "status": "available",
+      "currentOrder": null
+    },
+    {
+      "id": 10,
+      "number": 10,
+      "capacity": 4,
+      "status": "available",
+      "currentOrder": null
+    },
+    {
+      "id": 11,
+      "number": 11,
+      "capacity": 6,
+      "status": "available",
+      "currentOrder": null
+    },
+    {
+      "id": 12,
+      "number": 12,
+      "capacity": 6,
+      "status": "available",
+      "currentOrder": null
+    },
+    {
+      "id": 13,
+      "number": 13,
+      "capacity": 6,
+      "status": "available",
+      "currentOrder": null
+    },
+    {
+      "id": 14,
+      "number": 14,
+      "capacity": 6,
+      "status": "available",
+      "currentOrder": null
+    },
+    {
+      "id": 15,
+      "number": 15,
+      "capacity": 6,
+      "status": "available",
+      "currentOrder": null
+    },
+    {
+      "id": 16,
+      "number": 16,
+      "capacity": 6,
+      "status": "available",
+      "currentOrder": null
+    },
+    {
+      "id": 17,
+      "number": 17,
+      "capacity": 6,
+      "status": "available",
+      "currentOrder": null
+    },
+    {
+      "id": 18,
+      "number": 18,
+      "capacity": 6,
+      "status": "available",
+      "currentOrder": null
+    },
+    {
+      "id": 19,
+      "number": 19,
+      "capacity": 6,
+      "status": "available",
+      "currentOrder": null
+    },
+    {
+      "id": 20,
+      "number": 20,
+      "capacity": 6,
+      "status": "available",
+      "currentOrder": null
+    }
+  ],
+  "orders": [],
+  "inventory": [
+    {
+      "id": 1,
+      "name": "Harina de Trigo",
+      "item_name": "Harina de Trigo",
+      "unit": "kg",
+      "stock": 47.199999999999996,
+      "current_stock": 47.199999999999996,
+      "minStock": 20,
+      "min_stock": 20,
+      "category": "Materia Prima"
+    },
+    {
+      "id": 2,
+      "name": "Azúcar",
+      "item_name": "Azúcar",
+      "unit": "kg",
+      "stock": 29.5,
+      "current_stock": 29.5,
+      "minStock": 15,
+      "min_stock": 15,
+      "category": "Materia Prima"
+    },
+    {
+      "id": 3,
+      "name": "Levadura",
+      "item_name": "Levadura",
+      "unit": "paquetes",
+      "stock": 25,
+      "current_stock": 25,
+      "minStock": 10,
+      "min_stock": 10,
+      "category": "Materia Prima"
+    },
+    {
+      "id": 4,
+      "name": "Mantequilla",
+      "item_name": "Mantequilla",
+      "unit": "kg",
+      "stock": 15,
+      "current_stock": 15,
+      "minStock": 8,
+      "min_stock": 8,
+      "category": "Materia Prima"
+    },
+    {
+      "id": 5,
+      "name": "Huevos",
+      "item_name": "Huevos",
+      "unit": "docenas",
+      "stock": 40,
+      "current_stock": 40,
+      "minStock": 20,
+      "min_stock": 20,
+      "category": "Materia Prima"
+    },
+    {
+      "id": 6,
+      "name": "Pan de Prueba Auditoría",
+      "item_name": "Pan de Prueba Auditoría",
+      "unit": "unidades",
+      "stock": 10,
+      "current_stock": 10,
+      "minStock": 10,
+      "min_stock": 10,
+      "category": "Producto Terminado",
+      "cost": 0
+    },
+    {
+      "id": 7,
+      "name": "Pan Integral",
+      "item_name": "Pan Integral",
+      "unit": "unidades",
+      "stock": 10,
+      "current_stock": 10,
+      "minStock": 10,
+      "min_stock": 10,
+      "category": "Producto Terminado",
+      "cost": 0
+    },
+    {
+      "id": 8,
+      "name": "Croissant Artesanal",
+      "item_name": "Croissant Artesanal",
+      "unit": "unidades",
+      "stock": 50,
+      "current_stock": 50,
+      "minStock": 10,
+      "min_stock": 10,
+      "category": "Producto Terminado",
+      "cost": 0
+    }
+  ],
+  "expenses": [],
+  "reservations": [],
+  "shifts": [
+    {
+      "id": "shift-mock-1",
+      "status": "closed",
+      "openedAt": "2026-01-04T20:40:25.801Z",
+      "closedAt": "2026-01-05T05:47:05.801Z",
+      "initialAmount": 200000,
+      "finalAmount": 1450000,
+      "salesTotal": 1250000,
+      "difference": 0,
+      "user": "Carlos Administrador"
+    },
+    {
+      "id": "shift-mock-2",
+      "status": "closed",
+      "openedAt": "2026-01-05T20:40:25.801Z",
+      "closedAt": "2026-01-06T06:47:05.801Z",
+      "initialAmount": 200000,
+      "finalAmount": 1800000,
+      "salesTotal": 1600000,
+      "difference": 10000,
+      "user": "Juan Panadero"
+    }
+  ],
+  "payments": [],
+  "tips": [],
+  "notifications": [
+    {
+      "id": 1,
+      "type": "low_stock",
+      "title": "Stock Bajo",
+      "message": "Harina de Trigo: Solo quedan 5kg",
+      "priority": "high",
+      "read": false,
+      "createdAt": "2026-01-06T20:40:25.801Z"
+    }
+  ],
+  "favorites": {},
+  "carts": {},
+  "loyaltyPoints": {},
+  "pushSubscriptions": [],
+  "employeeShifts": [
+    {
+      "id": "shift-1",
+      "employeeId": 2,
+      "employeeName": "Juan Panadero",
+      "date": "2026-01-06T00:00:00.000Z",
+      "startTime": "05:00",
+      "endTime": "13:00",
+      "status": "scheduled",
+      "notes": "Turno mañana",
+      "attendanceTime": null,
+      "createdAt": "2026-01-05T10:00:00.000Z",
+      "updatedAt": "2026-01-05T10:00:00.000Z"
+    },
+    {
+      "id": "shift-2",
+      "employeeId": 3,
+      "employeeName": "Pedro Hornero",
+      "date": "2026-01-06T00:00:00.000Z",
+      "startTime": "13:00",
+      "endTime": "21:00",
+      "status": "scheduled",
+      "notes": "Turno tarde",
+      "attendanceTime": null,
+      "createdAt": "2026-01-05T10:00:00.000Z",
+      "updatedAt": "2026-01-05T10:00:00.000Z"
+    },
+    {
+      "id": "shift-3",
+      "employeeId": 2,
+      "employeeName": "Juan Panadero",
+      "date": "2026-01-07T00:00:00.000Z",
+      "startTime": "05:00",
+      "endTime": "13:00",
+      "status": "scheduled",
+      "notes": null,
+      "attendanceTime": null,
+      "createdAt": "2026-01-05T10:00:00.000Z",
+      "updatedAt": "2026-01-05T10:00:00.000Z"
+    },
+    {
+      "id": "shift-4",
+      "employeeId": 3,
+      "employeeName": "Pedro Hornero",
+      "date": "2026-01-07T00:00:00.000Z",
+      "startTime": "13:00",
+      "endTime": "21:00",
+      "status": "scheduled",
+      "notes": null,
+      "attendanceTime": null,
+      "createdAt": "2026-01-05T10:00:00.000Z",
+      "updatedAt": "2026-01-05T10:00:00.000Z"
+    },
+    {
+      "id": "shift-5",
+      "employeeId": 2,
+      "employeeName": "Juan Panadero",
+      "date": "2026-01-03T00:00:00.000Z",
+      "startTime": "05:00",
+      "endTime": "13:00",
+      "status": "completed",
+      "notes": null,
+      "attendanceTime": "2026-01-03T05:05:00.000Z",
+      "createdAt": "2026-01-02T10:00:00.000Z",
+      "updatedAt": "2026-01-03T05:05:00.000Z"
+    },
+    {
+      "id": "shift-6",
+      "employeeId": 3,
+      "employeeName": "Pedro Hornero",
+      "date": "2026-01-03T00:00:00.000Z",
+      "startTime": "13:00",
+      "endTime": "21:00",
+      "status": "completed",
+      "notes": null,
+      "attendanceTime": "2026-01-03T13:02:00.000Z",
+      "createdAt": "2026-01-02T10:00:00.000Z",
+      "updatedAt": "2026-01-03T13:02:00.000Z"
+    },
+    {
+      "id": "shift-7",
+      "employeeId": 2,
+      "employeeName": "Juan Panadero",
+      "date": "2026-01-02T00:00:00.000Z",
+      "startTime": "05:00",
+      "endTime": "13:00",
+      "status": "completed",
+      "notes": null,
+      "attendanceTime": "2026-01-02T05:03:00.000Z",
+      "createdAt": "2026-01-01T10:00:00.000Z",
+      "updatedAt": "2026-01-02T05:03:00.000Z"
+    }
+  ],
+  "shiftChangeRequests": [
+    {
+      "id": "request-1",
+      "shiftId": "shift-1",
+      "employeeId": 2,
+      "employeeName": "Juan Panadero",
+      "currentDate": "2026-01-06T00:00:00.000Z",
+      "requestedDate": "2026-01-10T00:00:00.000Z",
+      "reason": "Cita médica",
+      "status": "pending",
+      "createdAt": "2026-01-05T15:00:00.000Z",
+      "updatedAt": "2026-01-05T15:00:00.000Z"
+    }
+  ],
+  "kitchenOrders": [
+    {
+      "id": "order-1",
+      "tableNumber": 5,
+      "items": [{"id": "item-1", "productId": 1, "productName": "Croissant Artesanal", "quantity": 2, "notes": "Sin mantequilla extra"}],
+      "status": "pending",
+      "priority": "high",
+      "createdAt": "2026-01-07T11:25:00.000Z",
+      "startedAt": null,
+      "completedAt": null,
+      "prepTime": null,
+      "estimatedTime": 5
+    },
+    {
+      "id": "order-2",
+      "tableNumber": 3,
+      "items": [{"id": "item-3", "productId": 2, "productName": "Pan Integral", "quantity": 3, "notes": ""}],
+      "status": "pending",
+      "priority": "medium",
+      "createdAt": "2026-01-07T11:20:00.000Z",
+      "startedAt": null,
+      "completedAt": null,
+      "prepTime": null,
+      "estimatedTime": 8
+    },
+    {
+      "id": "order-3",
+      "tableNumber": 7,
+      "items": [{"id": "item-4", "productId": 1, "productName": "Croissant", "quantity": 4, "notes": ""}],
+      "status": "pending",
+      "priority": "high",
+      "createdAt": "2026-01-07T11:28:00.000Z",
+      "startedAt": null,
+      "completedAt": null,
+      "prepTime": null,
+      "estimatedTime": 3
+    }
+  ],
+  "kitchenStats": {
+    "date": "2026-01-07",
+    "pendingOrders": 3,
+    "inPreparation": 2,
+    "completedToday": 42,
+    "avgPrepTime": 11
+  }
+}

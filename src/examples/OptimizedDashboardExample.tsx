@@ -1,7 +1,8 @@
 // 🥖 PAMBAZO - Ejemplo de Dashboard Optimizado
 // Demuestra cómo usar el sistema de optimización sin modificar componentes existentes
 
-import React, { useState } from 'react';
+import { useState } from 'react';
+import type { Order, Notification } from '../shared/types';
 import { OptimizedSyncProvider, useSyncContext, SyncIndicator, SyncDebugInfo } from '../components/OptimizedSyncProvider';
 import { useSyncConfig } from '../config/syncConfig';
 import type { User } from '../../shared/types';
@@ -48,7 +49,7 @@ export const OptimizedOrdersList: React.FC = () => {
   const orders = optimizedStore.orders;
 
   // Filtrar órdenes según selección
-  const filteredOrders = orders.filter(order => {
+  const filteredOrders = orders.filter((order: Order) => {
     if (filter === 'all') return true;
     return order.status === filter;
   });
@@ -80,7 +81,7 @@ export const OptimizedOrdersList: React.FC = () => {
 
       {/* Lista de órdenes */}
       <div className="space-y-2">
-        {relevantOrders.map(order => (
+        {relevantOrders.map((order: Order) => (
           <div key={order.id} className="border rounded p-3">
             <div className="flex justify-between items-center">
               <span className="font-medium">Mesa {order.tableNumber}</span>
@@ -134,7 +135,7 @@ export const OptimizedNotifications: React.FC = () => {
       </div>
 
       <div className="space-y-2 max-h-64 overflow-y-auto">
-        {notifications.slice(0, 10).map(notification => (
+        {notifications.slice(0, 10).map((notification: Notification) => (
           <div
             key={notification.id}
             className={`p-3 rounded border-l-4 ${notification.read

@@ -3,8 +3,8 @@
 
 import React, { createContext, useContext, useEffect, useMemo, ReactNode } from 'react';
 import { useOptimizedStore } from '../hooks/useOptimizedStore';
-import { DataSyncOptimizer } from '../../store/syncOptimizer';
-import type { User } from '../../shared/types';
+import { DataSyncOptimizer } from '../store/syncOptimizer';
+import type { User } from '../shared/types';
 
 // Tipos para el contexto
 type UserRole = 'owner' | 'admin' | 'baker' | 'waiter' | 'employee' | 'customer';

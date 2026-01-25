@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Diagnóstico Pambazo</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🛠️ Diagnóstico de Conexión</h1>
+    <p>Este archivo prueba la conexión con el servidor backend independientemente de la aplicación principal.</p>
+
+    <div id="status" style="padding:10px; border:1px solid #ccc; background:#f0f0f0;">
+        Probando conexión...
+    </div>
+
+    <script>
+        const statusDiv = document.getElementById('status');
+
+        function log(msg, color = 'black') {
+            statusDiv.innerHTML += `<div style="color:${color}; margin:5px 0;">${msg}</div>`;
+        }
+
+        async function runDiagnostics() {
+            log('1. Verificando Backend (Health Check)...');
+            try {
+                const start = Date.now();
+                const res = await fetch('http://localhost:3001/api/health');
+                const time = Date.now() - start;
+
+                if (res.ok) {
+                    const data = await res.json();
+                    log(`✅ Backend OK (${time}ms)`, 'green');
+                    log(`   Respuesta: ${JSON.stringify(data)}`, 'green');
+                } else {
+                    log(`❌ Backend respondió con error: ${res.status}`, 'red');
+                }
+            } catch (e) {
+                log(`❌ Error de conexión con Backend: ${e.message}`, 'red');
+                log('   Asegúrate de que el servidor (puerto 3001) esté corriendo.', 'red');
+            }
+
+            log('<br>2. Verificando Kitchen API (Auth Check)...');
+            const token = localStorage.getItem('token');
+            if (!token) {
+                log('⚠️ No hay token de sesión guardado (localStorage). Debes iniciar sesión.', 'orange');
+            } else {
+                log('ℹ️ Token encontrado. Probando acceso...', 'blue');
+                try {
+                    const res = await fetch('http://localhost:3001/api/kitchen/stats', {
+                        headers: { 'Authorization': `Bearer ${token}` }
+                    });
+                    if (res.ok) {
+                        log('✅ Acceso a Kitchen API autorizado.', 'green');
+                    } else {
+                        log(`❌ Acceso denegado (${res.status}). Tu sesión expiró o es inválida.`, 'red');
+                    }
+                } catch (e) {
+                    log(`❌ Error conectando a Kitchen API: ${e.message}`, 'red');
+                }
+            }
+        }
+
+        runDiagnostics();
+    </script>
+</body>
+
+</html>

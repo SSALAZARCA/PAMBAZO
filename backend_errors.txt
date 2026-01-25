@@ -1,0 +1,1 @@
+﻿api/services/UserService.ts(47,31): error TS2339: Property 'getPool' does not exist on type 'typeof DatabaseService'.
