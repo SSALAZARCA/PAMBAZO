@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  # 1. Base de Datos - PostgreSQL
+  # 1. Base de Datos - PostgreSQL (Puerto interno 5432, no expuesto al host por seguridad, usar 7004 si es necesario)
   database:
     image: postgres:15-alpine
     container_name: pambazo-db
@@ -27,8 +27,8 @@ services:
     container_name: pambazo-minio
     restart: unless-stopped
     ports:
-      - "9000:9000" # S3 API
-      - "9001:9001" # Console UI
+      - "7002:9000" # S3 API -> Puerto 7002 Host
+      - "7003:9001" # Console UI -> Puerto 7003 Host
     environment:
       MINIO_ROOT_USER: ${MINIO_ROOT_USER:-admin}
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-pambazo_minio_secret}
@@ -51,7 +51,7 @@ services:
     container_name: pambazo-backend
     restart: unless-stopped
     ports:
-      - "3001:3001"
+      - "7001:3001" # API -> Puerto 7001 Host
     environment:
       - NODE_ENV=production
       - PORT=3001
@@ -66,6 +66,8 @@ services:
       - MINIO_ACCESS_KEY=${MINIO_ROOT_USER:-admin}
       - MINIO_SECRET_KEY=${MINIO_ROOT_PASSWORD:-pambazo_minio_secret}
       - MINIO_BUCKET=${MINIO_BUCKET:-pambazo-images}
+      # URL pública para que el navegador resuelva las imágenes (ajustar segun IP/Dominio)
+      - MINIO_PUBLIC_URL=http://localhost:7002
     depends_on:
       database:
         condition: service_healthy
@@ -80,11 +82,12 @@ services:
       context: .
       dockerfile: Dockerfile.frontend
       args:
-        - VITE_API_URL=${VITE_API_URL:-http://localhost:3001/api/v1}
+        # El frontend se comunica con la API en el puerto 7001 del host
+        - VITE_API_URL=${VITE_API_URL:-http://localhost:7001/api/v1}
     container_name: pambazo-frontend
     restart: unless-stopped
     ports:
-      - "80:6001"
+      - "7000:6001" # Web App -> Puerto 7000 Host
     networks:
       - pambazo-network
     depends_on:
