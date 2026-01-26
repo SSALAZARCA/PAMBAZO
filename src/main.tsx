@@ -1,15 +1,15 @@
+// 🛡️ ESCUDO ANTI-ERRORES EXTERNOS
+try {
+  const _originalDefine = customElements.define;
+  customElements.define = function (name, constructor, options) {
+    if (!customElements.get(name)) {
+      _originalDefine.call(this, name, constructor, options);
+    }
+  };
+} catch (e) { }
+
 console.log('🚀 PAMBAZO: Sistema Iniciando...');
 console.log('🔗 API Base URL:', import.meta.env['VITE_API_URL']);
-
-// Error suppression for common environment conflicts
-const originalDefine = customElements.define;
-customElements.define = function (name, constructor, options) {
-  if (customElements.get(name)) {
-    console.warn(`⚠️ Omitting duplicate registration for: ${name}`);
-    return;
-  }
-  originalDefine.call(this, name, constructor, options);
-};
 
 import React from 'react';
 import ReactDOM from 'react-dom/client';
