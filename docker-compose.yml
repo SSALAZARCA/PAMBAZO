@@ -66,6 +66,7 @@ services:
       - MINIO_ACCESS_KEY=${MINIO_ROOT_USER:-admin}
       - MINIO_SECRET_KEY=${MINIO_ROOT_PASSWORD:-pambazo_minio_secret}
       - MINIO_BUCKET=${MINIO_BUCKET:-pambazo-images}
+      - REDEPLOY_TRIGGER=20260126-v1
       # URL pública para que el navegador resuelva las imágenes (ajustar segun IP/Dominio)
       - MINIO_PUBLIC_URL=http://localhost:7002
     depends_on:
