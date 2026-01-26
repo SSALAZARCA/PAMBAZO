@@ -214,4 +214,4 @@ app.post('/api/v1/upload', auth, async (req, res) => {
 });
 
 app.use('*', (req, res) => ApiResponse.error(res, 'Ruta no encontrada', 404));
-app.listen(PORT, () => console.log(`🚀 API v2.1 Producción en puerto ${PORT}`));
+app.listen(6000, () => console.log(`🚀 API v2.1 Producción en puerto 6000`));

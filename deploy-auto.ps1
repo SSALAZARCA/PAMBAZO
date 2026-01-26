@@ -3,7 +3,7 @@
 # Usuario: root
 # Contraseña: Ssalazarca841209+
 
-$VPS_HOST = "31.97.128.11"
+$VPS_HOST = "72.62.130.152"
 $VPS_USER = "root"
 $VPS_PASSWORD = "Ssalazarca841209+"
 $VPS_PATH = "/var/www/pambazo"
