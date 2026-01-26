@@ -68,10 +68,15 @@ const LoginForm: React.FC<LoginFormProps> = ({ isMobile = false }) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (!validateForm()) return;
+    console.log('📝 Formulario enviado:', { isLogin, email: formData.email });
+    if (!validateForm()) {
+      console.warn('❌ Validación fallida');
+      return;
+    }
 
     try {
+      console.log('⏳ Iniciando proceso de autenticación...');
+      console.log('🔗 API Base URL:', import.meta.env['VITE_API_URL']);
       let success = false;
 
       if (isLogin) {
