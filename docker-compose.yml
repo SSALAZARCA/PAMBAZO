@@ -7,16 +7,16 @@ services:
     container_name: pambazo-db
     restart: unless-stopped
     environment:
-      POSTGRES_DB: ${DB_NAME:-pambazo_db}
-      POSTGRES_USER: ${DB_USER:-pambazo_user}
-      POSTGRES_PASSWORD: ${DB_PASSWORD:-pambazo123}
+      POSTGRES_DB: ${DB_NAME:-pambaso_db}
+      POSTGRES_USER: ${DB_USER:-pambaso_user}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-pambaso123}
     volumes:
       - postgres-data:/var/lib/postgresql/data
       - ./database/init/01-init-database.sql:/docker-entrypoint-initdb.d/init.sql:ro
     networks:
       - pambazo-network
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U ${DB_USER:-pambazo_user} -d ${DB_NAME:-pambazo_db}" ]
+      test: [ "CMD-SHELL", "pg_isready -U ${DB_USER:-pambaso_user} -d ${DB_NAME:-pambaso_db}" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -57,9 +57,9 @@ services:
       - PORT=3001
       - DB_HOST=database
       - DB_PORT=5432
-      - DB_NAME=${DB_NAME:-pambazo_db}
-      - DB_USER=${DB_USER:-pambazo_user}
-      - DB_PASSWORD=${DB_PASSWORD:-pambazo123}
+      - DB_NAME=${DB_NAME:-pambaso_db}
+      - DB_USER=${DB_USER:-pambaso_user}
+      - DB_PASSWORD=${DB_PASSWORD:-pambaso123}
       - JWT_SECRET=${JWT_SECRET:-tu_clave_secreta_super_segura_2024}
       - MINIO_ENDPOINT=minio
       - MINIO_PORT=9000

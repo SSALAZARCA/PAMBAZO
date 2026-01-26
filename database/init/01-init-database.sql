@@ -4,8 +4,8 @@
 -- Create database if it doesn't exist (handled by POSTGRES_DB env var)
 -- Create user if it doesn't exist (handled by POSTGRES_USER env var)
 
--- Connect to the database
-\c pambaso_db;
+-- Connect to the database (already handled by container init)
+-- \c pambaso_db;
 
 -- Enable UUID extension
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";

@@ -17,9 +17,9 @@ app.use(express.json({ limit: '50mb' }));
 const pool = new Pool({
     host: process.env.DB_HOST || 'localhost',
     port: process.env.DB_PORT || 5432,
-    database: process.env.DB_NAME || 'pambazo_db',
-    user: process.env.DB_USER || 'pambazo_user',
-    password: process.env.DB_PASSWORD || 'pambazo123',
+    database: process.env.DB_NAME || 'pambaso_db',
+    user: process.env.DB_USER || 'pambaso_user',
+    password: process.env.DB_PASSWORD || 'pambaso123',
 });
 
 // Prueba de conexión inmediata
