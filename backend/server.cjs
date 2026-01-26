@@ -1,5 +1,4 @@
 ﻿// 🥖 PAMBASO 2.1 - Backend de Producción (Consolidado)
-SYNTAX_ERROR_HERE;
 const express = require('express');
 const cors = require('cors');
 const bcrypt = require('bcryptjs');
