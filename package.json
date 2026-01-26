@@ -1,6 +1,6 @@
 {
   "name": "pambazo-bakery-management",
-  "version": "1.0.0",
+  "version": "1.1.0-debug",
   "description": "Sistema completo de gestión para panadería optimizado para móvil con PWA",
   "main": "App.tsx",
   "type": "module",
