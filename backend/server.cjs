@@ -87,12 +87,7 @@ const authorize = (roles) => (req, res, next) => roles.includes(req.user.role) ?
 
 // --- RUTAS V1 ---
 app.get('/api/v1/health', async (req, res) => {
-    const userCount = await pool.query('SELECT COUNT(*) FROM users');
-    ApiResponse.success(res, {
-        status: 'OK',
-        version: '2.1.2-bootstrap',
-        users: parseInt(userCount.rows[0].count)
-    });
+    res.status(200).send('HEALTH_OK_V3_UNIQUE');
 });
 app.get('/api/v1/debug/db', async (req, res) => {
     try {
