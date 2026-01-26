@@ -125,8 +125,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ isMobile = false }) => {
           </p>
         </div>
 
-        {/* Form */}
-        <form onSubmit={handleSubmit} className="space-y-4">
+        {/* Form Container (Using div to prevent browser reloads) */}
+        <div className="space-y-4">
           {/* Name field (only for registration) */}
           {!isLogin && (
             <div>
@@ -226,9 +226,10 @@ const LoginForm: React.FC<LoginFormProps> = ({ isMobile = false }) => {
             </div>
           )}
 
-          {/* Submit button */}
+          {/* Submit button (Using button type="button" to prevent reload) */}
           <button
-            type="submit"
+            type="button"
+            onClick={handleSubmit}
             disabled={isLoading}
             className="w-full bg-orange-600 hover:bg-orange-700 disabled:bg-orange-400 text-white font-semibold py-2 px-4 rounded-lg transition-colors flex items-center justify-center gap-2"
           >
@@ -241,7 +242,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ isMobile = false }) => {
               </>
             )}
           </button>
-        </form>
+        </div>
 
         {/* Toggle mode */}
         <div className="mt-6 text-center">
