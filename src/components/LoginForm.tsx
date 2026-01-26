@@ -66,17 +66,14 @@ const LoginForm: React.FC<LoginFormProps> = ({ isMobile = false }) => {
     return true;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('📝 Formulario enviado:', { isLogin, email: formData.email });
-    if (!validateForm()) {
-      console.warn('❌ Validación fallida');
-      return;
-    }
+  const handleSubmit = async (e: any) => {
+    if (e && e.preventDefault) e.preventDefault();
+
+    console.log('📝 Intentando login...');
+    if (!validateForm()) return;
 
     try {
-      console.log('⏳ Iniciando proceso de autenticación...');
-      console.log('🔗 API Base URL:', import.meta.env['VITE_API_URL']);
+      console.log('⏳ Llamando a:', import.meta.env['VITE_API_URL']);
       let success = false;
 
       if (isLogin) {
@@ -86,11 +83,14 @@ const LoginForm: React.FC<LoginFormProps> = ({ isMobile = false }) => {
       }
 
       if (success) {
-        navigate('/dashboard', { replace: true });
+        alert('✅ ¡LOGIN EXITOSO! Redirigiendo al Dashboard...');
+        window.location.href = '/dashboard';
+      } else {
+        alert('❌ FALLO DE AUTENTICACIÓN: Revisa tus credenciales o los logs del Backend.');
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Authentication error:', error);
-      toast.error('Error de conexión. Intenta nuevamente.');
+      alert('⚠️ ERROR CRÍTICO: ' + (error.message || 'Error de conexión'));
     }
   };
 
