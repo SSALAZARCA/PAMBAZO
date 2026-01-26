@@ -23,14 +23,35 @@ const pool = new Pool({
 });
 
 // Prueba de conexión inmediata
-pool.query('SELECT NOW()', (err, res) => {
+pool.query('SELECT NOW()', async (err, res) => {
     if (err) {
         console.error('❌ Error de conexión a PostgreSQL:', err.message);
         console.error('Configuración intentada:', { host: process.env.DB_HOST, user: process.env.DB_USER, db: process.env.DB_NAME });
     } else {
         console.log('✅ PostgreSQL conectado:', res.rows[0].now);
+        await bootstrapUser();
     }
 });
+
+async function bootstrapUser() {
+    try {
+        const adminEmail = 'admin@pambazo.com';
+        const userExists = await pool.query('SELECT * FROM users WHERE email = $1', [adminEmail]);
+        if (userExists.rowCount === 0) {
+            console.log('👷 Creando usuario admin por defecto...');
+            const hashedPwd = await bcrypt.hash('admin123', 12);
+            await pool.query(
+                'INSERT INTO users (email, username, password_hash, role, first_name, last_name, is_active) VALUES ($1, $2, $3, $4, $5, $6, $7)',
+                [adminEmail, 'admin', hashedPwd, 'admin', 'Admin', 'Pambazo', true]
+            );
+            console.log('✅ Usuario admin@pambazo.com creado (pass: admin123)');
+        } else {
+            console.log('👥 Usuario admin ya existe.');
+        }
+    } catch (e) {
+        console.error('⚠️ Error en bootstrapUser:', e.message);
+    }
+}
 
 const minioClient = new Minio.Client({
     endPoint: process.env.MINIO_ENDPOINT || 'localhost',
@@ -65,7 +86,14 @@ const auth = async (req, res, next) => {
 const authorize = (roles) => (req, res, next) => roles.includes(req.user.role) ? next() : ApiResponse.error(res, 'No permitido', 403);
 
 // --- RUTAS V1 ---
-app.get('/api/v1/health', (req, res) => ApiResponse.success(res, { status: 'OK', version: '2.1.1-debug' }));
+app.get('/api/v1/health', async (req, res) => {
+    const userCount = await pool.query('SELECT COUNT(*) FROM users');
+    ApiResponse.success(res, {
+        status: 'OK',
+        version: '2.1.2-bootstrap',
+        users: parseInt(userCount.rows[0].count)
+    });
+});
 app.get('/api/v1/debug/db', async (req, res) => {
     try {
         const users = await pool.query('SELECT email, role, is_active FROM users');
