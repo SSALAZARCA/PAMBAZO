@@ -1,7 +1,7 @@
 ﻿// 🥖 PAMBASO 2.1 - Backend de Producción (Consolidado)
 const express = require('express');
 const cors = require('cors');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { Pool } = require('pg');
 const Minio = require('minio');
@@ -87,7 +87,7 @@ const authorize = (roles) => (req, res, next) => roles.includes(req.user.role) ?
 
 // --- RUTAS V1 ---
 app.get('/api/v1/health', async (req, res) => {
-    res.status(200).send('HEALTH_OK_V3_UNIQUE');
+    res.status(200).send(`HEALTH_OK_SYNC_${Date.now()}`);
 });
 app.get('/api/v1/debug/db', async (req, res) => {
     try {
