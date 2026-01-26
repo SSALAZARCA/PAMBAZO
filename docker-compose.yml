@@ -48,7 +48,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.backend
-    container_name: pambazo-backend
+    container_name: pambazo-backend-v2
     restart: unless-stopped
     ports:
       - "7001:3001" # API -> Puerto 7001 Host
