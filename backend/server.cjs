@@ -22,6 +22,16 @@ const pool = new Pool({
     password: process.env.DB_PASSWORD || 'pambazo123',
 });
 
+// Prueba de conexión inmediata
+pool.query('SELECT NOW()', (err, res) => {
+    if (err) {
+        console.error('❌ Error de conexión a PostgreSQL:', err.message);
+        console.error('Configuración intentada:', { host: process.env.DB_HOST, user: process.env.DB_USER, db: process.env.DB_NAME });
+    } else {
+        console.log('✅ PostgreSQL conectado:', res.rows[0].now);
+    }
+});
+
 const minioClient = new Minio.Client({
     endPoint: process.env.MINIO_ENDPOINT || 'localhost',
     port: parseInt(process.env.MINIO_PORT) || 9000,
