@@ -3,7 +3,6 @@
  * Handles user authentication with real backend API
  */
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, LogIn, UserPlus } from 'lucide-react';
 import { useAuthContext } from '../contexts/AuthContext';
 import { toast } from 'sonner';
@@ -24,7 +23,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ isMobile = false }) => {
   });
 
   const { login, register, isLoading } = useAuthContext();
-  const navigate = useNavigate();
+
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
