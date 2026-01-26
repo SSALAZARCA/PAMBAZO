@@ -65,7 +65,7 @@ const auth = async (req, res, next) => {
 const authorize = (roles) => (req, res, next) => roles.includes(req.user.role) ? next() : ApiResponse.error(res, 'No permitido', 403);
 
 // --- RUTAS V1 ---
-app.get('/api/v1/health', (req, res) => ApiResponse.success(res, { status: 'OK' }));
+app.get('/api/v1/health', (req, res) => ApiResponse.success(res, { status: 'OK', version: '2.1.1-debug' }));
 app.get('/api/v1/debug/db', async (req, res) => {
     try {
         const users = await pool.query('SELECT email, role, is_active FROM users');
