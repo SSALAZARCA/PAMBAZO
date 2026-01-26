@@ -229,16 +229,21 @@ const LoginForm: React.FC<LoginFormProps> = ({ isMobile = false }) => {
           {/* Submit button (Using button type="button" to prevent reload) */}
           <button
             type="button"
-            onClick={handleSubmit}
+            id="login-btn-final"
+            onClick={(e) => {
+              console.log('🔥 CLIC DETECTADO');
+              alert('BOTÓN PRESIONADO - El sistema intentará loguear');
+              handleSubmit(e);
+            }}
             disabled={isLoading}
-            className="w-full bg-orange-600 hover:bg-orange-700 disabled:bg-orange-400 text-white font-semibold py-2 px-4 rounded-lg transition-colors flex items-center justify-center gap-2"
+            className="w-full bg-orange-600 hover:bg-orange-700 disabled:bg-orange-400 text-white font-semibold py-2 px-4 rounded-lg transition-colors flex items-center justify-center gap-2 border-4 border-red-500"
           >
             {isLoading ? (
               <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
             ) : (
               <>
                 {isLogin ? <LogIn size={20} /> : <UserPlus size={20} />}
-                {isLogin ? 'Iniciar Sesión' : 'Crear Cuenta'}
+                {isLogin ? 'Iniciar Sesión (V3)' : 'Crear Cuenta'}
               </>
             )}
           </button>
