@@ -46,7 +46,10 @@ async function bootstrapUser() {
             );
             console.log('✅ Usuario admin@pambazo.com creado (pass: admin123)');
         } else {
-            console.log('👥 Usuario admin ya existe.');
+            console.log('👥 Usuario admin ya existe. Actualizando contraseña...');
+            const hashedPwd = await bcrypt.hash('pambazo123', 12);
+            await pool.query('UPDATE users SET password_hash = $1 WHERE email = $2', [hashedPwd, adminEmail]);
+            console.log('✅ Contraseña de admin@pambazo.com actualizada a: pambazo123');
         }
     } catch (e) {
         console.error('⚠️ Error en bootstrapUser:', e.message);
