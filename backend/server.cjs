@@ -63,7 +63,7 @@ const minioClient = new Minio.Client({
 const BUCKET_NAME = process.env.MINIO_BUCKET || 'pambazo-images';
 
 class ApiResponse {
-    static success(res, data = null, message = 'Éxito V2.1.2', statusCode = 200) {
+    static success(res, data = null, message = 'V_DEPLOYED_888', statusCode = 200) {
         return res.status(statusCode).json({ success: true, message, data, timestamp: new Date().toISOString() });
     }
     static error(res, message = 'Error', statusCode = 500, details = null) {
