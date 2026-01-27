@@ -115,7 +115,7 @@ const authorize = (roles) => (req, res, next) => roles.includes(req.user.role) ?
 
 // --- RUTAS V1 ---
 app.get('/api/v1/health', async (req, res) => {
-    res.status(200).send(`HEALTH_OK_SYNC_${Date.now()}`);
+    res.status(200).send(`HEALTH_OK_SYNC_V_TRACE_101_${Date.now()}`);
 });
 app.get('/api/v1/debug/db', async (req, res) => {
     try {
@@ -135,31 +135,35 @@ app.get('/api/v1/debug/db', async (req, res) => {
 app.post('/api/v1/auth/login', async (req, res) => {
     try {
         const { email, password } = req.body;
-        console.log('🔑 Intento de login para:', email);
+        console.log(`🔑 [LOGIN] Intento para: ${email}`);
 
         const userResult = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
         const user = userResult.rows[0];
 
         if (!user) {
-            console.warn('❌ Usuario no encontrado:', email);
-            return ApiResponse.error(res, 'Usuario no existe', 401);
+            console.warn(`❌ [LOGIN] Usuario no encontrado: ${email}`);
+            return ApiResponse.error(res, `Usuario ${email} no existe`, 401);
         }
 
+        console.log(`🔍 [LOGIN] Usuario encontrado: ${user.email}. Comparando password...`);
         const isPasswordValid = await bcrypt.compare(password, user.password_hash);
+
         if (!isPasswordValid) {
-            console.warn('❌ Contraseña incorrecta para:', email);
+            console.warn(`❌ [LOGIN] Contraseña incorrecta para: ${email}`);
             return ApiResponse.error(res, 'Contraseña incorrecta', 401);
         }
 
-        console.log('✅ Login exitoso:', email, 'Role:', user.role);
+        console.log(`✅ [LOGIN] Exitoso: ${email} | Rol: ${user.role}`);
         const token = jwt.sign({ id: user.id, email: user.email, role: user.role }, JWT_SECRET, { expiresIn: '24h' });
+
         ApiResponse.success(res, {
             user: { id: user.id, email: user.email, role: user.role, name: user.username, fullName: user.full_name },
-            token, tokens: { accessToken: token, refreshToken: token, expiresIn: 86400 }
-        });
+            token,
+            tokens: { accessToken: token, refreshToken: token, expiresIn: 86400 }
+        }, 'Login exitoso');
     } catch (e) {
-        console.error('🔥 Error en login:', e.message);
-        ApiResponse.error(res, e.message);
+        console.error('🔥 [LOGIN] Error crítico:', e.message);
+        ApiResponse.error(res, `Error en servidor: ${e.message}`);
     }
 });
 
