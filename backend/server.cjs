@@ -60,21 +60,27 @@ pool.query('SELECT NOW()', async (err, res) => {
 
 async function bootstrapUser() {
     try {
-        const adminEmail = 'admin@pambazo.com';
-        const userExists = await pool.query('SELECT * FROM users WHERE email = $1', [adminEmail]);
+        const correctEmail = 'admin@pambazo.com';
+        const legacyEmail = 'admin@pambaso.com';
         const hashedPwd = await bcrypt.hash('pambazo123', 12);
 
+        console.log('🧹 Limpiando inconsistencias de usuarios...');
+        // Eliminar rastro de emails incorrectos o conflictos de username 'admin'
+        await pool.query('DELETE FROM users WHERE email = $1 OR (username = $2 AND email != $3)', [legacyEmail, 'admin', correctEmail]);
+
+        const userExists = await pool.query('SELECT * FROM users WHERE email = $1', [correctEmail]);
+
         if (userExists.rowCount === 0) {
-            console.log('👷 Creando usuario admin por defecto...');
+            console.log('👷 Creando usuario admin@pambazo.com...');
             await pool.query(
                 'INSERT INTO users (email, username, password_hash, role, full_name, is_active) VALUES ($1, $2, $3, $4, $5, $6)',
-                [adminEmail, 'admin', hashedPwd, 'admin', 'Admin Pambazo', true]
+                [correctEmail, 'admin', hashedPwd, 'admin', 'Administrador Pambazo', true]
             );
             console.log('✅ Usuario admin@pambazo.com creado.');
         } else {
-            console.log('👥 Usuario admin ya existe. Asegurando contraseña...');
-            await pool.query('UPDATE users SET password_hash = $1 WHERE email = $2', [hashedPwd, adminEmail]);
-            console.log('✅ Contraseña de admin@pambazo.com sincronizada.');
+            console.log('👥 Asegurando contraseña para admin@pambazo.com...');
+            await pool.query('UPDATE users SET password_hash = $1, username = $2 WHERE email = $3', [hashedPwd, 'admin', correctEmail]);
+            console.log('✅ Usuario admin@pambazo.com actualizado.');
         }
     } catch (e) {
         console.error('⚠️ Error en bootstrapUser:', e.message);
@@ -115,7 +121,7 @@ const authorize = (roles) => (req, res, next) => roles.includes(req.user.role) ?
 
 // --- RUTAS V1 ---
 app.get('/api/v1/health', async (req, res) => {
-    res.status(200).send(`HEALTH_OK_SYNC_V_TRACE_101_${Date.now()}`);
+    res.status(200).send(`HEALTH_OK_SYNC_V_TRACE_102_${Date.now()}`);
 });
 app.get('/api/v1/debug/db', async (req, res) => {
     try {
