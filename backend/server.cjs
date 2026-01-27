@@ -34,12 +34,10 @@ pool.query('SELECT NOW()', async (err, res) => {
         console.log('✅ PostgreSQL conectado:', res.rows[0].now);
 
         try {
-            // Verificar si existen tablas (ej. users)
-            const tableCheck = await pool.query("SELECT to_regclass('public.users')");
+            // Verificar si la base de datos está completa (usando 'products' como testigo)
+            const tableCheck = await pool.query("SELECT to_regclass('public.products')");
             if (!tableCheck.rows[0].to_regclass) {
-                console.log('⚠️ Base de datos vacía detectada. Iniciando auto-migración...');
-                // Ruta relativa desde backend/server.cjs hacia database/init/01-init-database.sql
-                // En Docker: /app/backend/server.cjs -> /app/database/init/01-init-database.sql
+                console.log('⚠️ Base de datos incompleta detectada. Iniciando auto-migración...');
                 const sqlPath = path.join(__dirname, '..', 'database', 'init', '01-init-database.sql');
 
                 if (fs.existsSync(sqlPath)) {
@@ -50,7 +48,7 @@ pool.query('SELECT NOW()', async (err, res) => {
                     console.error('❌ Archivo de migración no encontrado en:', sqlPath);
                 }
             } else {
-                console.log('ℹ️ Tablas existentes detectadas.');
+                console.log('ℹ️ Base de datos ya inicializada.');
             }
         } catch (dbInitErr) {
             console.error('❌ Error durante la inicialización de DB:', dbInitErr.message);
@@ -64,19 +62,19 @@ async function bootstrapUser() {
     try {
         const adminEmail = 'admin@pambazo.com';
         const userExists = await pool.query('SELECT * FROM users WHERE email = $1', [adminEmail]);
+        const hashedPwd = await bcrypt.hash('pambazo123', 12);
+
         if (userExists.rowCount === 0) {
             console.log('👷 Creando usuario admin por defecto...');
-            const hashedPwd = await bcrypt.hash('admin123', 12);
             await pool.query(
-                'INSERT INTO users (email, username, password_hash, role, first_name, last_name, is_active) VALUES ($1, $2, $3, $4, $5, $6, $7)',
-                [adminEmail, 'admin', hashedPwd, 'admin', 'Admin', 'Pambazo', true]
+                'INSERT INTO users (email, username, password_hash, role, full_name, is_active) VALUES ($1, $2, $3, $4, $5, $6)',
+                [adminEmail, 'admin', hashedPwd, 'admin', 'Admin Pambazo', true]
             );
-            console.log('✅ Usuario admin@pambazo.com creado (pass: admin123)');
+            console.log('✅ Usuario admin@pambazo.com creado.');
         } else {
-            console.log('👥 Usuario admin ya existe. Actualizando contraseña...');
-            const hashedPwd = await bcrypt.hash('pambazo123', 12);
+            console.log('👥 Usuario admin ya existe. Asegurando contraseña...');
             await pool.query('UPDATE users SET password_hash = $1 WHERE email = $2', [hashedPwd, adminEmail]);
-            console.log('✅ Contraseña de admin@pambazo.com actualizada a: pambazo123');
+            console.log('✅ Contraseña de admin@pambazo.com sincronizada.');
         }
     } catch (e) {
         console.error('⚠️ Error en bootstrapUser:', e.message);
