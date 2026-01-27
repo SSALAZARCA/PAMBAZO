@@ -22,13 +22,40 @@ const pool = new Pool({
     password: process.env.DB_PASSWORD || 'pambaso123',
 });
 
-// Prueba de conexión inmediata
+const fs = require('fs');
+const path = require('path');
+
+// Prueba de conexión e inicialización
 pool.query('SELECT NOW()', async (err, res) => {
     if (err) {
         console.error('❌ Error de conexión a PostgreSQL:', err.message);
         console.error('Configuración intentada:', { host: process.env.DB_HOST, user: process.env.DB_USER, db: process.env.DB_NAME });
     } else {
         console.log('✅ PostgreSQL conectado:', res.rows[0].now);
+
+        try {
+            // Verificar si existen tablas (ej. users)
+            const tableCheck = await pool.query("SELECT to_regclass('public.users')");
+            if (!tableCheck.rows[0].to_regclass) {
+                console.log('⚠️ Base de datos vacía detectada. Iniciando auto-migración...');
+                // Ruta relativa desde backend/server.cjs hacia database/init/01-init-database.sql
+                // En Docker: /app/backend/server.cjs -> /app/database/init/01-init-database.sql
+                const sqlPath = path.join(__dirname, '..', 'database', 'init', '01-init-database.sql');
+
+                if (fs.existsSync(sqlPath)) {
+                    const sql = fs.readFileSync(sqlPath, 'utf8');
+                    await pool.query(sql);
+                    console.log('✅ Esquema de base de datos aplicado exitosamente.');
+                } else {
+                    console.error('❌ Archivo de migración no encontrado en:', sqlPath);
+                }
+            } else {
+                console.log('ℹ️ Tablas existentes detectadas.');
+            }
+        } catch (dbInitErr) {
+            console.error('❌ Error durante la inicialización de DB:', dbInitErr.message);
+        }
+
         await bootstrapUser();
     }
 });
@@ -214,4 +241,4 @@ app.post('/api/v1/upload', auth, async (req, res) => {
 });
 
 app.use('*', (req, res) => ApiResponse.error(res, 'Ruta no encontrada', 404));
-app.listen(6000, () => console.log(`🚀 API v2.1 Producción en puerto 6000`));
+app.listen(PORT, () => console.log(`🚀 API v2.1 Producción en puerto ${PORT}`));
