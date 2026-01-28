@@ -134,7 +134,29 @@ const authorize = (roles) => (req, res, next) => roles.includes(req.user.role) ?
 
 // --- RUTAS V1 ---
 app.get('/api/v1/health', async (req, res) => {
-    res.status(200).send(`HEALTH_OK_SYNC_V_TRACE_105_${Date.now()}`);
+    res.status(200).send(`HEALTH_OK_SYNC_V_TRACE_107_${Date.now()}`);
+});
+
+// AUTH
+app.post('/api/v1/auth/register', async (req, res) => {
+    try {
+        const { username, email, password, role, name } = req.body;
+        const hashedPwd = await bcrypt.hash(password || 'pambazo123', 12);
+
+        const result = await pool.query(
+            'INSERT INTO users (username, email, password_hash, role, full_name, is_active) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id, username, email, role, full_name',
+            [username || email.split('@')[0], email, hashedPwd, role || 'waiter', name || username, true]
+        );
+
+        const user = result.rows[0];
+        const token = jwt.sign({ id: user.id, email: user.email, role: user.role }, JWT_SECRET, { expiresIn: '24h' });
+
+        ApiResponse.success(res, {
+            user: { ...user, fullName: user.full_name },
+            accessToken: token,
+            refreshToken: token
+        }, 'Registro exitoso');
+    } catch (e) { ApiResponse.error(res, e.message); }
 });
 app.get('/api/v1/debug/db', async (req, res) => {
     try {
@@ -487,13 +509,77 @@ app.get('/api/v1/tables/:id', auth, async (req, res) => {
 
 // INVENTARIO
 app.get('/api/v1/inventory', auth, authorize(['admin', 'owner', 'kitchen']), async (req, res) => {
-    const result = await pool.query('SELECT * FROM inventory ORDER BY item_name ASC');
-    ApiResponse.success(res, { inventory: result.rows, pagination: { total: result.rowCount, page: 1, limit: 100 } });
+    try {
+        const result = await pool.query('SELECT * FROM inventory ORDER BY item_name ASC');
+        ApiResponse.success(res, {
+            inventory: result.rows,
+            pagination: { total: result.rowCount, page: 1, limit: 100, pages: 1 }
+        });
+    } catch (e) { ApiResponse.error(res, e.message); }
+});
+
+app.get('/api/v1/inventory/:id', auth, authorize(['admin', 'owner', 'kitchen']), async (req, res) => {
+    try {
+        const result = await pool.query('SELECT * FROM inventory WHERE id = $1', [req.params.id]);
+        if (result.rowCount === 0) return ApiResponse.error(res, 'Item no encontrado', 404);
+        ApiResponse.success(res, { item: result.rows[0] });
+    } catch (e) { ApiResponse.error(res, e.message); }
+});
+
+app.post('/api/v1/inventory', auth, authorize(['admin', 'owner']), async (req, res) => {
+    try {
+        const { item_name, current_stock, min_stock, unit, product_id } = req.body;
+        const result = await pool.query(
+            'INSERT INTO inventory (item_name, current_stock, min_stock, unit, product_id) VALUES ($1, $2, $3, $4, $5) RETURNING id',
+            [item_name, current_stock || 0, min_stock || 0, unit, product_id]
+        );
+        ApiResponse.success(res, { item: { id: result.rows[0].id } }, 'Item creado');
+    } catch (e) { ApiResponse.error(res, e.message); }
+});
+
+app.put('/api/v1/inventory/:id', auth, authorize(['admin', 'owner']), async (req, res) => {
+    try {
+        const { item_name, current_stock, min_stock, unit, product_id } = req.body;
+        await pool.query(
+            'UPDATE inventory SET item_name=$1, current_stock=$2, min_stock=$3, unit=$4, product_id=$5, updated_at=NOW() WHERE id=$6',
+            [item_name, current_stock, min_stock, unit, product_id, req.params.id]
+        );
+        ApiResponse.success(res, null, 'Item actualizado');
+    } catch (e) { ApiResponse.error(res, e.message); }
+});
+
+app.delete('/api/v1/inventory/:id', auth, authorize(['admin', 'owner']), async (req, res) => {
+    try {
+        await pool.query('DELETE FROM inventory WHERE id = $1', [req.params.id]);
+        ApiResponse.success(res, null, 'Item eliminado');
+    } catch (e) { ApiResponse.error(res, e.message); }
 });
 
 app.get('/api/v1/inventory/alerts/low-stock', auth, async (req, res) => {
-    const result = await pool.query('SELECT * FROM inventory WHERE current_stock <= min_stock');
-    ApiResponse.success(res, { low_stock_items: result.rows, count: result.rowCount });
+    try {
+        const result = await pool.query('SELECT * FROM inventory WHERE current_stock <= min_stock');
+        ApiResponse.success(res, { low_stock_items: result.rows, count: result.rowCount });
+    } catch (e) { ApiResponse.error(res, e.message); }
+});
+
+// --- SHIFTS ---
+app.get('/api/v1/shifts', auth, async (req, res) => {
+    try {
+        const result = await pool.query('SELECT * FROM employee_shifts ORDER BY start_time DESC');
+        ApiResponse.success(res, result.rows);
+    } catch (e) { ApiResponse.error(res, e.message); }
+});
+
+// --- LOYALTY ---
+app.get('/api/v1/loyalty/rewards', auth, async (req, res) => {
+    try {
+        // En una implementación real esta tabla existiría. Por ahora devolvemos lista vacía
+        ApiResponse.success(res, []);
+    } catch (e) { ApiResponse.error(res, e.message); }
+});
+
+app.get('/api/v1/loyalty/config', auth, async (req, res) => {
+    ApiResponse.success(res, { amountPerPoint: 10, enabled: true });
 });
 
 // REPORTES & DASHBOARD
