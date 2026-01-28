@@ -134,7 +134,7 @@ const authorize = (roles) => (req, res, next) => roles.includes(req.user.role) ?
 
 // --- RUTAS V1 ---
 app.get('/api/v1/health', async (req, res) => {
-    res.status(200).send(`HEALTH_OK_SYNC_V_TRACE_107_${Date.now()}`);
+    res.status(200).send(`HEALTH_OK_SYNC_V_TRACE_109_${Date.now()}`);
 });
 
 // AUTH
@@ -226,6 +226,26 @@ app.get('/api/v1/auth/me', auth, async (req, res) => {
         first_name: user.full_name?.split(' ')[0] || user.username,
         last_name: user.full_name?.split(' ').slice(1).join(' ') || ''
     });
+});
+
+app.put('/api/v1/auth/profile', auth, async (req, res) => {
+    try {
+        const { full_name, username } = req.body;
+        await pool.query('UPDATE users SET full_name=$1, username=$2, updated_at=NOW() WHERE id=$3', [full_name, username, req.user.id]);
+        ApiResponse.success(res, null, 'Perfil actualizado');
+    } catch (e) { ApiResponse.error(res, e.message); }
+});
+
+app.put('/api/v1/auth/change-password', auth, async (req, res) => {
+    try {
+        const { current_password, new_password } = req.body;
+        const user = (await pool.query('SELECT password_hash FROM users WHERE id = $1', [req.user.id])).rows[0];
+        const valid = await bcrypt.compare(current_password, user.password_hash);
+        if (!valid) return ApiResponse.error(res, 'Contraseña actual incorrecta', 401);
+        const hash = await bcrypt.hash(new_password, 12);
+        await pool.query('UPDATE users SET password_hash=$1, updated_at=NOW() WHERE id=$2', [hash, req.user.id]);
+        ApiResponse.success(res, null, 'Contraseña actualizada');
+    } catch (e) { ApiResponse.error(res, e.message); }
 });
 
 // --- USUARIOS CRUD ---
@@ -388,6 +408,22 @@ app.post('/api/v1/orders', auth, async (req, res) => {
     }
 });
 
+app.patch('/api/v1/orders/:id/status', auth, async (req, res) => {
+    try {
+        const { status } = req.body;
+        await pool.query('UPDATE orders SET status=$1, updated_at=NOW() WHERE id=$2', [status, req.params.id]);
+        io.emit('order:status-updated', { id: req.params.id, status });
+        ApiResponse.success(res, null, 'Estado actualizado');
+    } catch (e) { ApiResponse.error(res, e.message); }
+});
+
+app.delete('/api/v1/orders/:id', auth, authorize(['admin', 'owner']), async (req, res) => {
+    try {
+        await pool.query('DELETE FROM orders WHERE id = $1', [req.params.id]);
+        ApiResponse.success(res, null, 'Orden eliminada');
+    } catch (e) { ApiResponse.error(res, e.message); }
+});
+
 // PRODUCTOS & CATEGORÍAS
 app.get('/api/v1/products', async (req, res) => {
     const { category_id, search } = req.query;
@@ -507,6 +543,15 @@ app.get('/api/v1/tables/:id', auth, async (req, res) => {
     ApiResponse.success(res, { table: result.rows[0] });
 });
 
+app.patch('/api/v1/tables/:id/status', auth, async (req, res) => {
+    try {
+        const { status } = req.body;
+        await pool.query('UPDATE tables SET status=$1, updated_at=NOW() WHERE id=$2', [status, req.params.id]);
+        io.emit('table:status-updated', { id: req.params.id, status });
+        ApiResponse.success(res, null, 'Estado de mesa actualizado');
+    } catch (e) { ApiResponse.error(res, e.message); }
+});
+
 // INVENTARIO
 app.get('/api/v1/inventory', auth, authorize(['admin', 'owner', 'kitchen']), async (req, res) => {
     try {
@@ -562,11 +607,58 @@ app.get('/api/v1/inventory/alerts/low-stock', auth, async (req, res) => {
     } catch (e) { ApiResponse.error(res, e.message); }
 });
 
+app.patch('/api/v1/inventory/:id/stock', auth, authorize(['admin', 'owner', 'kitchen']), async (req, res) => {
+    try {
+        const { quantity, movement_type, reason } = req.body;
+        const factor = movement_type === 'in' ? 1 : -1;
+        await pool.query('UPDATE inventory SET current_stock = current_stock + $1, updated_at = NOW() WHERE id = $2', [quantity * factor, req.params.id]);
+        // Registrar movimiento (asumiendo tabla inventory_movements existe en el init)
+        await pool.query(
+            'INSERT INTO inventory_movements (inventory_id, movement_type, quantity, reason, created_by) VALUES ($1, $2, $3, $4, $5)',
+            [req.params.id, movement_type, quantity, reason, req.user.id]
+        );
+        ApiResponse.success(res, null, 'Stock actualizado');
+    } catch (e) { ApiResponse.error(res, e.message); }
+});
+
+app.get('/api/v1/inventory/movements', auth, async (req, res) => {
+    try {
+        const result = await pool.query('SELECT m.*, i.item_name, u.username as created_by_name FROM inventory_movements m JOIN inventory i ON m.inventory_id = i.id JOIN users u ON m.created_by = u.id ORDER BY m.created_at DESC LIMIT 100');
+        ApiResponse.success(res, { movements: result.rows });
+    } catch (e) { ApiResponse.error(res, e.message); }
+});
+
 // --- SHIFTS ---
 app.get('/api/v1/shifts', auth, async (req, res) => {
     try {
-        const result = await pool.query('SELECT * FROM employee_shifts ORDER BY start_time DESC');
-        ApiResponse.success(res, result.rows);
+        const result = await pool.query('SELECT s.*, u.full_name as employee_name FROM employee_shifts s LEFT JOIN users u ON s.user_id = u.id ORDER BY s.start_time DESC');
+        ApiResponse.success(res, { shifts: result.rows });
+    } catch (e) { ApiResponse.error(res, e.message); }
+});
+
+app.post('/api/v1/shifts', auth, authorize(['admin', 'owner']), async (req, res) => {
+    try {
+        const { user_id, start_time, end_time, role, notes } = req.body;
+        const result = await pool.query(
+            'INSERT INTO employee_shifts (user_id, start_time, end_time, role, notes) VALUES ($1, $2, $3, $4, $5) RETURNING id',
+            [user_id, start_time, end_time, role, notes]
+        );
+        ApiResponse.success(res, { id: result.rows[0].id }, 'Turno creado');
+    } catch (e) { ApiResponse.error(res, e.message); }
+});
+
+app.patch('/api/v1/shifts/:id', auth, authorize(['admin', 'owner']), async (req, res) => {
+    try {
+        const { status, end_time, notes } = req.body;
+        await pool.query('UPDATE employee_shifts SET status=$1, end_time=$2, notes=$3, updated_at=NOW() WHERE id=$4', [status, end_time, notes, req.params.id]);
+        ApiResponse.success(res, null, 'Turno actualizado');
+    } catch (e) { ApiResponse.error(res, e.message); }
+});
+
+app.delete('/api/v1/shifts/:id', auth, authorize(['admin', 'owner']), async (req, res) => {
+    try {
+        await pool.query('DELETE FROM employee_shifts WHERE id = $1', [req.params.id]);
+        ApiResponse.success(res, null, 'Turno eliminado');
     } catch (e) { ApiResponse.error(res, e.message); }
 });
 
