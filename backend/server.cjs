@@ -60,9 +60,51 @@ pool.query('SELECT NOW()', async (err, res) => {
                 } else {
                     console.error('❌ Archivo de migración no encontrado. No se puede inicializar la DB.');
                 }
-            } else {
-                console.log('ℹ️ Base de datos ya cuenta con tablas base.');
             }
+
+            // --- PARCHES DE ESQUEMA (ASEGURAR COMPATIBILIDAD V2.1) ---
+            console.log('🛠️ Aplicando parches de esquema si es necesario...');
+
+            // 1. Columna product_id en inventory
+            await pool.query(`
+                DO $$ 
+                BEGIN 
+                    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='inventory' AND column_name='product_id') THEN
+                        ALTER TABLE inventory ADD COLUMN product_id UUID REFERENCES products(id);
+                    END IF;
+                END $$;
+            `);
+
+            // 2. Tabla inventory_movements
+            await pool.query(`
+                CREATE TABLE IF NOT EXISTS inventory_movements (
+                    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+                    inventory_id UUID REFERENCES inventory(id) ON DELETE CASCADE,
+                    movement_type VARCHAR(10) CHECK (movement_type IN ('in', 'out')),
+                    quantity DECIMAL(10,3) NOT NULL,
+                    reason TEXT,
+                    created_by UUID REFERENCES users(id),
+                    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+                );
+            `);
+
+            // 3. Tabla employee_shifts
+            await pool.query(`
+                CREATE TABLE IF NOT EXISTS employee_shifts (
+                    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+                    user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+                    start_time TIMESTAMP WITH TIME ZONE NOT NULL,
+                    end_time TIMESTAMP WITH TIME ZONE,
+                    role VARCHAR(50),
+                    status VARCHAR(20) DEFAULT 'scheduled',
+                    notes TEXT,
+                    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+                    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+                );
+            `);
+
+            console.log('✅ Verificación de esquema completada.');
+
         } catch (dbInitErr) {
             console.error('❌ Error crítico durante la inicialización de DB:', dbInitErr.message);
         }
@@ -134,7 +176,7 @@ const authorize = (roles) => (req, res, next) => roles.includes(req.user.role) ?
 
 // --- RUTAS V1 ---
 app.get('/api/v1/health', async (req, res) => {
-    res.status(200).send(`HEALTH_OK_SYNC_V_TRACE_109_${Date.now()}`);
+    res.status(200).send(`HEALTH_OK_SYNC_V_TRACE_110_${Date.now()}`);
 });
 
 // AUTH

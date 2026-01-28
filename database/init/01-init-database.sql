@@ -111,7 +111,32 @@ CREATE TABLE IF NOT EXISTS inventory (
     supplier VARCHAR(200),
     expiry_date DATE,
     location VARCHAR(100),
+    product_id UUID REFERENCES products(id),
     is_active BOOLEAN DEFAULT true,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Inventory movements table
+CREATE TABLE IF NOT EXISTS inventory_movements (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    inventory_id UUID REFERENCES inventory(id) ON DELETE CASCADE,
+    movement_type VARCHAR(10) CHECK (movement_type IN ('in', 'out')),
+    quantity DECIMAL(10,3) NOT NULL,
+    reason TEXT,
+    created_by UUID REFERENCES users(id),
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Employee shifts table
+CREATE TABLE IF NOT EXISTS employee_shifts (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+    start_time TIMESTAMP WITH TIME ZONE NOT NULL,
+    end_time TIMESTAMP WITH TIME ZONE,
+    role VARCHAR(50),
+    status VARCHAR(20) DEFAULT 'scheduled',
+    notes TEXT,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
