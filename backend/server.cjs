@@ -176,7 +176,7 @@ const authorize = (roles) => (req, res, next) => roles.includes(req.user.role) ?
 
 // --- RUTAS V1 ---
 app.get('/api/v1/health', async (req, res) => {
-    res.status(200).send(`HEALTH_OK_SYNC_V_TRACE_110_${Date.now()}`);
+    res.status(200).send(`HEALTH_OK_SYNC_V_TRACE_111_${Date.now()}`);
 });
 
 // AUTH
@@ -616,12 +616,22 @@ app.get('/api/v1/inventory/:id', auth, authorize(['admin', 'owner', 'kitchen']),
 app.post('/api/v1/inventory', auth, authorize(['admin', 'owner']), async (req, res) => {
     try {
         const { item_name, current_stock, min_stock, unit, product_id } = req.body;
+
+        if (!item_name) return ApiResponse.error(res, 'Nombre del ítem requerido', 400);
+        if (!unit) return ApiResponse.error(res, 'Unidad de medida requerida', 400);
+
+        // Convertir string vacío a null para evitar error de sintaxis UUID en Postgres
+        const safeProductId = (product_id && product_id.trim() !== '') ? product_id : null;
+
         const result = await pool.query(
             'INSERT INTO inventory (item_name, current_stock, min_stock, unit, product_id) VALUES ($1, $2, $3, $4, $5) RETURNING id',
-            [item_name, current_stock || 0, min_stock || 0, unit, product_id]
+            [item_name, current_stock || 0, min_stock || 0, unit, safeProductId]
         );
         ApiResponse.success(res, { item: { id: result.rows[0].id } }, 'Item creado');
-    } catch (e) { ApiResponse.error(res, e.message); }
+    } catch (e) {
+        console.error('❌ Error creando inventario:', e.message);
+        ApiResponse.error(res, e.message);
+    }
 });
 
 app.put('/api/v1/inventory/:id', auth, authorize(['admin', 'owner']), async (req, res) => {
