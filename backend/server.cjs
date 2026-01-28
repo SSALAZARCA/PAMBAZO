@@ -121,7 +121,7 @@ const authorize = (roles) => (req, res, next) => roles.includes(req.user.role) ?
 
 // --- RUTAS V1 ---
 app.get('/api/v1/health', async (req, res) => {
-    res.status(200).send(`HEALTH_OK_SYNC_V_TRACE_102_${Date.now()}`);
+    res.status(200).send(`HEALTH_OK_SYNC_V_TRACE_103_${Date.now()}`);
 });
 app.get('/api/v1/debug/db', async (req, res) => {
     try {
@@ -176,6 +176,153 @@ app.post('/api/v1/auth/login', async (req, res) => {
 app.get('/api/v1/auth/me', auth, async (req, res) => {
     const user = (await pool.query('SELECT id, username, email, role, full_name FROM users WHERE id = $1', [req.user.id])).rows[0];
     ApiResponse.success(res, user);
+});
+
+// --- USUARIOS CRUD ---
+app.get('/api/v1/users', auth, authorize(['admin']), async (req, res) => {
+    const result = await pool.query('SELECT id, username, email, role, full_name, is_active, created_at FROM users ORDER BY created_at DESC');
+    ApiResponse.success(res, result.rows);
+});
+
+app.post('/api/v1/users', auth, authorize(['admin']), async (req, res) => {
+    try {
+        const { username, email, password, role, full_name } = req.body;
+        const hash = await bcrypt.hash(password || 'pambazo123', 12);
+        const result = await pool.query(
+            'INSERT INTO users (username, email, password_hash, role, full_name) VALUES ($1, $2, $3, $4, $5) RETURNING id',
+            [username, email, hash, role || 'waiter', full_name]
+        );
+        ApiResponse.success(res, { id: result.rows[0].id }, 'Usuario creado');
+    } catch (e) { ApiResponse.error(res, e.message); }
+});
+
+app.put('/api/v1/users/:id', auth, authorize(['admin']), async (req, res) => {
+    try {
+        const { username, email, role, full_name, is_active } = req.body;
+        await pool.query(
+            'UPDATE users SET username=$1, email=$2, role=$3, full_name=$4, is_active=$5, updated_at=NOW() WHERE id=$6',
+            [username, email, role, full_name, is_active, req.params.id]
+        );
+        ApiResponse.success(res, null, 'Usuario actualizado');
+    } catch (e) { ApiResponse.error(res, e.message); }
+});
+
+app.delete('/api/v1/users/:id', auth, authorize(['admin']), async (req, res) => {
+    try {
+        await pool.query('DELETE FROM users WHERE id = $1', [req.params.id]);
+        ApiResponse.success(res, null, 'Usuario eliminado');
+    } catch (e) { ApiResponse.error(res, e.message); }
+});
+
+// --- CATEGORÍAS CRUD ---
+app.post('/api/v1/categories', auth, authorize(['admin']), async (req, res) => {
+    try {
+        const { name, description } = req.body;
+        const result = await pool.query('INSERT INTO categories (name, description) VALUES ($1, $2) RETURNING id', [name, description]);
+        ApiResponse.success(res, { id: result.rows[0].id }, 'Categoría creada');
+    } catch (e) { ApiResponse.error(res, e.message); }
+});
+
+app.put('/api/v1/categories/:id', auth, authorize(['admin']), async (req, res) => {
+    try {
+        const { name, description, is_active } = req.body;
+        await pool.query('UPDATE categories SET name=$1, description=$2, is_active=$3, updated_at=NOW() WHERE id=$4', [name, description, is_active, req.params.id]);
+        ApiResponse.success(res, null, 'Categoría actualizada');
+    } catch (e) { ApiResponse.error(res, e.message); }
+});
+
+app.delete('/api/v1/categories/:id', auth, authorize(['admin']), async (req, res) => {
+    try {
+        await pool.query('DELETE FROM categories WHERE id = $1', [req.params.id]);
+        ApiResponse.success(res, null, 'Categoría eliminada');
+    } catch (e) { ApiResponse.error(res, e.message); }
+});
+
+// --- PRODUCTOS CRUD ---
+app.post('/api/v1/products', auth, authorize(['admin']), async (req, res) => {
+    try {
+        const { name, description, price, category_id, image_url, preparation_time } = req.body;
+        const result = await pool.query(
+            'INSERT INTO products (name, description, price, category_id, image_url, preparation_time) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id',
+            [name, description, price, category_id, image_url, preparation_time || 15]
+        );
+        ApiResponse.success(res, { id: result.rows[0].id }, 'Producto creado');
+    } catch (e) { ApiResponse.error(res, e.message); }
+});
+
+app.put('/api/v1/products/:id', auth, authorize(['admin']), async (req, res) => {
+    try {
+        const { name, description, price, category_id, image_url, preparation_time, is_available } = req.body;
+        await pool.query(
+            'UPDATE products SET name=$1, description=$2, price=$3, category_id=$4, image_url=$5, preparation_time=$6, is_available=$7, updated_at=NOW() WHERE id=$8',
+            [name, description, price, category_id, image_url, preparation_time, is_available, req.params.id]
+        );
+        ApiResponse.success(res, null, 'Producto actualizado');
+    } catch (e) { ApiResponse.error(res, e.message); }
+});
+
+app.delete('/api/v1/products/:id', auth, authorize(['admin']), async (req, res) => {
+    try {
+        await pool.query('DELETE FROM products WHERE id = $1', [req.params.id]);
+        ApiResponse.success(res, null, 'Producto eliminado');
+    } catch (e) { ApiResponse.error(res, e.message); }
+});
+
+// --- MESAS CRUD ---
+app.post('/api/v1/tables', auth, authorize(['admin']), async (req, res) => {
+    try {
+        const { table_number, capacity, location } = req.body;
+        const result = await pool.query('INSERT INTO tables (table_number, capacity, location) VALUES ($1, $2, $3) RETURNING id', [table_number, capacity, location]);
+        ApiResponse.success(res, { id: result.rows[0].id }, 'Mesa creada');
+    } catch (e) { ApiResponse.error(res, e.message); }
+});
+
+app.put('/api/v1/tables/:id', auth, authorize(['admin']), async (req, res) => {
+    try {
+        const { table_number, capacity, location, status } = req.body;
+        await pool.query('UPDATE tables SET table_number=$1, capacity=$2, location=$3, status=$4, updated_at=NOW() WHERE id=$5', [table_number, capacity, location, status, req.params.id]);
+        ApiResponse.success(res, null, 'Mesa actualizada');
+    } catch (e) { ApiResponse.error(res, e.message); }
+});
+
+app.delete('/api/v1/tables/:id', auth, authorize(['admin']), async (req, res) => {
+    try {
+        await pool.query('DELETE FROM tables WHERE id = $1', [req.params.id]);
+        ApiResponse.success(res, null, 'Mesa eliminada');
+    } catch (e) { ApiResponse.error(res, e.message); }
+});
+
+// --- ÓRDENES (CREACIÓN) ---
+app.post('/api/v1/orders', auth, async (req, res) => {
+    const client = await pool.connect();
+    try {
+        await client.query('BEGIN');
+        const { table_id, items, notes, total_amount } = req.body;
+        const orderNumber = `ORD-${Date.now().toString().slice(-6)}`;
+
+        const orderRes = await client.query(
+            'INSERT INTO orders (order_number, table_id, waiter_id, total_amount, notes, status) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id',
+            [orderNumber, table_id, req.user.id, total_amount, notes, 'pending']
+        );
+        const orderId = orderRes.rows[0].id;
+
+        for (const item of items) {
+            await client.query(
+                'INSERT INTO order_items (order_id, product_id, quantity, unit_price, total_price) VALUES ($1, $2, $3, $4, $5)',
+                [orderId, item.product_id, item.quantity, item.unit_price, item.quantity * item.unit_price]
+            );
+        }
+
+        if (table_id) await client.query('UPDATE tables SET status = \'occupied\' WHERE id = $1', [table_id]);
+
+        await client.query('COMMIT');
+        ApiResponse.success(res, { id: orderId, orderNumber }, 'Orden creada exitosamente');
+    } catch (e) {
+        await client.query('ROLLBACK');
+        ApiResponse.error(res, e.message);
+    } finally {
+        client.release();
+    }
 });
 
 // PRODUCTOS & CATEGORÍAS
